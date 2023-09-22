@@ -2,7 +2,10 @@
 const express = require('express');
 const path = require('path');
 const  mongoose = require('mongoose');
+
 const connectDB = require('./config/connectDatabase');
+const User = require('./Database Entries/User');
+
 const PORT = process.env.PORT || 3500;
 
 const app = express();
@@ -11,8 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
 
-// app.use('/', require('./routes/root'));
-// app.use('/register', require('./routes/register'));
+app.use('/', require('./routes/root'));
+app.use('/register', require('./routes/register'));
 // app.use('/auth', require('./routes/auth'));
 // app.use('/refresh', require('./routes/refresh'));
 // app.use('/logout', require('./routes/logout'));
