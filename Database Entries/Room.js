@@ -15,14 +15,22 @@ class Room {
     this.roomCode = code;
     Room.rooms.push(this);
   }
+  static findRoom(code) {
+    for(let i = 0; i < Room.rooms.length; i++) {
+      if(Room.rooms[i].roomCode === code) {
+        return Room.rooms[i];
+      }
+    }
+    return null;
+  };
 }
 
 const codeAvailable = (code) => {
-  Room.rooms.forEach((room) => {
-    if(room.roomCode === code) {
+  for(let i = 0; i < Room.rooms.length; i++) {
+    if(Room.rooms[i].roomCode === code) {
       return false;
     }
-  });
+  }
   return true;
 };
 

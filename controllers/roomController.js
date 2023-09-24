@@ -14,7 +14,7 @@ const createRoom = (req, res) => {
     rules: rules,
     admin: user,
   });
-  res.status(200).json(room);
+  res.status(201).json(room);
 };
 
 const joinRoom = (req, res) => {
@@ -24,12 +24,8 @@ const joinRoom = (req, res) => {
     res.sendStatus(401);
     return;
   }
-  let foundRoom;
-  Room.rooms.forEach((room) => {
-    if(room.roomCode === roomCode) {
-      foundRoom = room;
-    }
-  });
+  const foundRoom = Room.findRoom(roomCode);
+  
   if(!foundRoom) {
     res.sendStatus(404);
     return;
@@ -40,6 +36,29 @@ const joinRoom = (req, res) => {
   }
   foundRoom.players.push(user);
   res.status(201).json(foundRoom);
+  //TODO redirect user to the room
 };
 
-module.exports = { createRoom, joinRoom };
+const joinRoomWRoomCode = (req, res) => {
+  const user = req.body.user;
+  const roomCode = (Number)(req.params.roomCode);
+  if(!user) {
+    res.sendStatus(401);
+    return;
+  }
+  const foundRoom = Room.findRoom(roomCode);
+  
+  if(!foundRoom) {
+    res.sendStatus(404);
+    return;
+  }
+  if(foundRoom.players.includes(user)) {
+    res.sendStatus(403);
+    return;
+  }
+  foundRoom.players.push(user);
+  res.status(201).json(foundRoom);
+  //TODO redirect user to the room
+};
+
+module.exports = { createRoom, joinRoom, joinRoomWRoomCode };

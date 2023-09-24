@@ -19,6 +19,7 @@ app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/createRoom', require('./routes/createRoom'));
 app.use('/joinRoom', require('./routes/joinRoom'));
+app.use('/room', require('./routes/room'));
 // app.use('/refresh', require('./routes/refresh'));
 // app.use('/logout', require('./routes/logout'));
 
