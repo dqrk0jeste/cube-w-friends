@@ -10,8 +10,10 @@ const handleLogin = async (req, res) => {
       res.status(401).json({ message: 'username not found'});
       return;
     }
-    if(bcrypt.compare(password, foundUser.password)) {
+    if(await bcrypt.compare(password, foundUser.password)) {
       res.status(200).json(foundUser);
+    } else {
+      res.status(401).json({ message: 'password not right'});
     }
   } catch(e) {
     console.log(e.message);

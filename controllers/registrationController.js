@@ -9,12 +9,12 @@ const handleRegistation = async (req, res) => {
       return;
     }
     const password = await bcrypt.hash(req.body.password, 10);
-    await User.create({
+    const user = {
       username: username,
       password: password
-    });
-    console.log(await User.find())
-    res.sendStatus(200);
+    };
+    await User.create(user);
+    res.status(200).json(user);
   } catch(e) {
     console.log(e.message);
     res.sendStatus(500);
