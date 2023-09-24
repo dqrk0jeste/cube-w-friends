@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,400;1,600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0 20px;
+  background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  background-color: rgba(255, 255, 255, 0.3);
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 40px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+}
+
+main h1 {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: rgb(54, 54, 54);
+}
+
+main form label {
+  padding-inline-start: 5px;
+}
+
+main form input {
+  width: 220px;
+  padding: 5px;
+  outline: none;
+  border: 0 solid black;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+main p {
+  margin-top: 20px;
+  text-align: center;
+}
+
+main p a {
+  color: black;
+}
+
+main button {
+  padding: 7px 20px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0 ,0.1);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255,0.7);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+main button:hover {
+  background-color: white
+}
