@@ -61,6 +61,11 @@ main p a {
   color: black;
 }
 
+main form > div {
+  display: flex;
+  justify-content: center;
+}
+
 main button {
   padding: 7px 20px;
   border: 0 solid black;

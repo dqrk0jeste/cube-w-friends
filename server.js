@@ -22,10 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
 
-app.use('/', require('./routes/root'));
-app.use('/index(.html)?', require('./routes/root'));
+app.use('/', require('./routes/login'));
+app.use('/index(.html)?', require('./routes/login'));
 app.use('/register(.html)?', require('./routes/register'));
-app.use('/login(.html)?', require('./routes/login'));
 app.use('/createRoom(.html)?', require('./routes/createRoom'));
 app.use('/joinRoom(.html)?', require('./routes/joinRoom'));
 app.use('/room(.html)?', require('./routes/room'));
