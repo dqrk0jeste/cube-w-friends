@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,400;1,600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 0;
+  font-family: 'Poppins', Arial;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0 20px;
+  background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 20px;
+  column-gap: 50px;
+  position: relative;
+}
+
+.user {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.user span {
+  margin-right: 5px;
+}
+
+.join {
+  background-color: rgba(255, 255, 255, 0.3);
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 40px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+}
+
+.join h2 {
+  text-align: center;
+  color: rgb(54, 54, 54);
+  margin-bottom: 20px;
+}
+
+.code {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: nowrap;
+}
+
+input {
+  height: 50px;
+  max-width: 38px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 0 solid black;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 30px;
+}
+
+button {
+  padding: 7px 20px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0 ,0.1);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255,0.7);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: white;
+}
+
+.create {
+  background-color: rgba(255, 255, 255, 0.3);
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 40px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+}
+
+.create h2 {
+  text-align: center;
+  color: rgb(54, 54, 54);
+  margin-bottom: 20px;
+}
+
+@media screen and (width > 900px) {
+  body {
+    flex-direction: row;
+  }
+}

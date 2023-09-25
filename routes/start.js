@@ -8,6 +8,6 @@ router.get('/',(req, res) => {
 
 router.use('/create-room', require('./createRoom'));
 
-router.use('/joinRoom', require('./joinRoom'));
+router.use('/join-room', require('./joinRoom'));
 
 module.exports = router;

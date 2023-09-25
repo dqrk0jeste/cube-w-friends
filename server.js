@@ -29,7 +29,12 @@ app.use('/', require('./routes/login'));
 app.use('/index(.html)?', require('./routes/login'));
 app.use('/register(.html)?', require('./routes/register'));
 app.use('/start', verifyJWT, require('./routes/start'));
-// app.use('/logout', require('./routes/logout'));
+app.use('/logout', require('./routes/logout'));
+
+app.get('/current-user', verifyJWT, (req, res, next) => {
+    res.json({ user: req.user });
+    return;
+})
 
 app.all('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', 'views', 'error404.html'));
