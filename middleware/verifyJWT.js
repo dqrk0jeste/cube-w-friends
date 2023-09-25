@@ -1,26 +1,24 @@
 const jwt = require('jsonwebtoken');
+const User = require('../Database Entries/User');
 
 const verifyJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader?.startsWith('Bearer ')) {
-      res.sendStatus(401);
-      return;
-    }
-    const token = authHeader.split(' ')[1];
-    console.log(token)
+    const token = req.cookies.jwt;
     jwt.verify(
-        token,
-        process.env.ACCESS_TOKEN_SECRET,
-        (err, decoded) => {
-            if (err) {
-              res.sendStatus(403);
-              return;
-            }
-            req.user = decoded.user;
-            console.log(req.use);
-            next();
+      token,
+      process.env.ACCESS_TOKEN_SECRET,
+      async (e, decoded) => {
+        if (e) {
+          res.sendStatus(403);
+          return;
         }
+        req.user = decoded.user;
+        next();
+      }
     );
 }
 
-module.exports = verifyJWT
+const validJWT = (token) => {
+  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+}
+
+module.exports = { verifyJWT, validJWT };

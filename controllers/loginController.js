@@ -17,19 +17,12 @@ const handleLogin = async (req, res) => {
         user: foundUser.username
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '10m' }
+        { expiresIn: '12h' }
       );
-      const refreshToken = jwt.sign({
-        user: foundUser.username },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '1d' }
-       );
-      res.cookie('jwt', refreshToken, {
-        httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000
+      res.cookie('jwt', accessToken, {
+        httpOnly: true, maxAge: 12 * 60 * 60 * 1000
       });
-      res.status(200).json({
-        accessToken: accessToken,
-      });
+      res.sendStatus(200);
     } else {
       res.sendStatus(401);
     }

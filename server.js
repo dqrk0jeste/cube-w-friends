@@ -1,12 +1,14 @@
 //require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const  mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const http = require('http');
 const socketio = require('socket.io');
+const cookieParser = require('cookie-parser');
 
 const connectDB = require('./config/connectDatabase');
 const User = require('./Database Entries/User');
+const { verifyJWT } = require('./middleware/verifyJWT');
 
 const PORT = process.env.PORT || 3500;
 
@@ -21,12 +23,12 @@ io.on('connection', (socket) => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
+app.use(cookieParser());
 
 app.use('/', require('./routes/login'));
 app.use('/index(.html)?', require('./routes/login'));
 app.use('/register(.html)?', require('./routes/register'));
-app.use('/start', require('./middleware/verifyJWT'), require('./routes/start'));
-// app.use('/refresh', require('./routes/refresh'));
+app.use('/start', verifyJWT, require('./routes/start'));
 // app.use('/logout', require('./routes/logout'));
 
 app.all('*', (req, res) => {

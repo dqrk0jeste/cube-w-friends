@@ -1,5 +1,3 @@
-let accessToken;
-
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
   fetch(e.target.action, {
@@ -7,7 +5,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
     body: new URLSearchParams(new FormData(e.target)) 
   }).then((response) => {
     if(response.status === 200) {
-      return response.json();
+      location.assign('/start');
     } else if(response.status === 401) {
       document.querySelector('.message h3').innerHTML = 'Wrong username or password'
       document.body.classList.add('msg');
@@ -17,18 +15,12 @@ document.querySelector('form').addEventListener('submit', (e) => {
       document.querySelectorAll('input').forEach((i) => {
         i.value = '';
       });
-      return;
     } else {
       document.querySelector('.message h3').innerHTML = 'Server error, please try again';
       document.body.classList.add('msg');
       setTimeout(() => {
         document.body.classList.remove('msg');
       }, 3000);
-    }
-  }).then((response) => {
-    if(response) {
-      accessToken = response.accessToken;
-      location.replace('../start');
     }
   });
 });
