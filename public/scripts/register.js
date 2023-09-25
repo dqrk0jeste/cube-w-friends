@@ -4,10 +4,16 @@ document.querySelector('form').addEventListener('submit', (e) => {
     method: 'POST',
     body: new URLSearchParams(new FormData(e.target)) 
   }).then((response) => {
-    if(response.status === 200) {
-      return response.json();
-    } else if(response.status === 401) {
-      document.querySelector('.message h3').innerHTML = 'Wrong username or password'
+    if(response.status === 201) {
+      document.querySelector('.message h3').innerHTML = 'Registration successful!';
+      document.body.classList.add('msg');
+      setTimeout(() => {
+        document.body.classList.remove('msg');
+        location.replace('..');
+      }, 1000);
+      return;
+    } else if(response.status === 409) {
+      document.querySelector('.message h3').innerHTML = 'Username taken'
       document.body.classList.add('msg');
       setTimeout(() => {
         document.body.classList.remove('msg');
@@ -17,15 +23,12 @@ document.querySelector('form').addEventListener('submit', (e) => {
       });
       return;
     } else {
-      document.querySelector('.message h3').innerHTML = 'Server error, please try again';
+      document.querySelector('.message h3').innerHTML = 'Server error, please try again'
       document.body.classList.add('msg');
       setTimeout(() => {
         document.body.classList.remove('msg');
       }, 3000);
+      return;
     }
-  }).then((response) => {
-    if(response) {
-      location.replace('../room');
-    }
-  });
+  })
 });

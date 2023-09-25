@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Room = require('../Database Entries/Room');
+const path = require('path');
 
 router.post('/:roomCode', (req, res) => {
   const roomCode = (Number)(req.params.roomCode);
@@ -18,6 +19,10 @@ router.post('/:roomCode', (req, res) => {
   } else {
     res.redirect(`/joinRoom/${roomCode}`);
   }
+});
+
+router.get('/',(req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'room.html'));
 });
 
 module.exports = router;

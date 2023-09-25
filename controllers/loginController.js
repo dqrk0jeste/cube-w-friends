@@ -1,5 +1,7 @@
+require('dotenv').config();
 const User = require('../Database Entries/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
   try {
@@ -7,13 +9,31 @@ const handleLogin = async (req, res) => {
     const password = req.body.password;
     const foundUser = await User.findOne().where('username').equals(username);
     if(!foundUser) {
-      res.status(401).json({ message: 'username not found'});
+      res.sendStatus(401);
       return;
     }
     if(await bcrypt.compare(password, foundUser.password)) {
-      res.status(200).json(foundUser);
+      const accessToken = jwt.sign({
+        user: foundUser.username
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '10m' }
+      );
+      const refreshToken = jwt.sign({
+        user: foundUser.username },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '1d' }
+       );
+      res.cookie('jwt', refreshToken, {
+        httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000
+      });
+      res.status(200).json({
+        user: foundUser.username,
+        accessToken: accessToken,
+        redirect: 'roomSelection'
+      });
     } else {
-      res.status(401).json({ message: 'password not right'});
+      res.sendStatus(401);
     }
   } catch(e) {
     console.log(e.message);
