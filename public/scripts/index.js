@@ -1,3 +1,5 @@
+let accessToken;
+
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
   fetch(e.target.action, {
@@ -25,7 +27,8 @@ document.querySelector('form').addEventListener('submit', (e) => {
     }
   }).then((response) => {
     if(response) {
-      location.replace('../room');
+      accessToken = response.accessToken;
+      location.replace('../start');
     }
   });
 });

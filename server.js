@@ -25,9 +25,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 app.use('/', require('./routes/login'));
 app.use('/index(.html)?', require('./routes/login'));
 app.use('/register(.html)?', require('./routes/register'));
-app.use('/createRoom', require('./routes/createRoom'));
-app.use('/joinRoom', require('./routes/joinRoom'));
-app.use('/room', require('./routes/room'));
+app.use('/start', require('./middleware/verifyJWT'), require('./routes/start'));
 // app.use('/refresh', require('./routes/refresh'));
 // app.use('/logout', require('./routes/logout'));
 

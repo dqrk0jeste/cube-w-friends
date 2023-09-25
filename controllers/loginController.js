@@ -28,9 +28,7 @@ const handleLogin = async (req, res) => {
         httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000
       });
       res.status(200).json({
-        user: foundUser.username,
         accessToken: accessToken,
-        redirect: 'roomSelection'
       });
     } else {
       res.sendStatus(401);
