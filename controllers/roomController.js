@@ -1,5 +1,4 @@
 const Room = require('../Database Entries/Room');
-const { random } = require('../util');
 
 const createRoom = (req, res) => {
   const roomName = req.body.roomName;

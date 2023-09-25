@@ -34,12 +34,16 @@ input5.addEventListener('keyup', (e) => {
 
 document.querySelector('.join-button')
   .addEventListener('click', (e) => {
-    const code = (Number)(input1.value + input2.value + input3.value + input1.value + input4.value + input5.value + input6.value)
-    console.log(code);
-    //TODO join a room
+    const code = input1.value + input2.value + input3.value + input4.value + input5.value + input6.value;
+    location.assign(`../join-room/${code}`)
   });
 
 document.querySelector('.logout-button')
   .addEventListener('click', (e) => {
     location.replace('../logout');
   })
+
+document.querySelector('.create-button')
+  .addEventListener('click', (e) => {
+    location.assign('../create-room')
+  });

@@ -34,7 +34,10 @@ app.use('/logout', require('./routes/logout'));
 app.get('/current-user', verifyJWT, (req, res, next) => {
     res.json({ user: req.user });
     return;
-})
+});
+
+app.use('/join-room', verifyJWT, require('./routes/joinRoom'));
+app.use('/create-room', verifyJWT, require('./routes/createRoom'));
 
 app.all('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', 'views', 'error404.html'));
