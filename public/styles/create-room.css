@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,400;1,600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
+  padding: 0 30px;
+}
+
+main > h1 {
+  margin-top: 10px;
+  padding-inline-start: 40px;
+  position: absolute;
+  top: -60px;
+  left: 10px;
+  color: rgb(54, 54, 54);
+}
+
+main h3 {
+  color: rgb(54, 54, 54);
+}
+
+main {
+  position: relative;
+  max-width: 1000px;
+  margin: 100px auto 0 auto; 
+  background-color: rgba(255, 255, 255, 0.7);
+  height: 100%;
+  padding: 30px 40px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+  position: relative;
+}
+
+main p {
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+main section {
+  margin-top: 10px;
+}
+
+input.number {
+  width: 30px;
+  text-align: center;
+}
+
+input {
+  border: none;
+  border-bottom: 2px solid rgb(54, 54, 54);;
+  width: 100px;
+  background-color: transparent;
+  outline: none;
+  font-size: 16px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button {
+  padding: 7px 20px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0 ,0.1);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255,0.7);
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  bottom: -60px;
+  right: 60px;
+}
+
+button:hover {
+  background-color: white;
+}
+
+@media screen and (width < 400px) {
+  body {
+    padding: 0 10px;
+  }
+}

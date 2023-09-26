@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { joinRoom, joinRoomWRoomCode } = require('../controllers/roomController');
 
-router.post('/', joinRoom);
-router.post('/:roomCode', joinRoomWRoomCode);
+//router.get('/', joinRoom);
+router.get('/:roomCode', joinRoomWRoomCode);
 
 module.exports = router;

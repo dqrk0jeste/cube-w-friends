@@ -7,7 +7,6 @@ class Room {
     this.roomName = obj.roomName;
     this.rules = obj.rules;
     this.admin = obj.admin;
-    this.players.push(obj.admin);
     let code = random(1000000);
     while(!codeAvailable(code)) {
       code = random(1000000);

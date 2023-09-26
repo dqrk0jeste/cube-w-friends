@@ -13,6 +13,7 @@ const verifyJWT = (req, res, next) => {
         }
         req.user = decoded.user;
         next();
+        return;
       }
     );
 }

@@ -4,8 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cube w/ Friends | Create Room</title>
+  <link rel="stylesheet" href="../styles/create-room.css">
 </head>
 <body>
-  <h1>Create Room</h1>
+  <main>
+    <h1>Your room, your rules!</h1>
+    <section class="general">
+      <h3>General</h3>
+      <p>Room name:
+        <input type="text" class="text" id="room-name">
+      </p>
+      <p>Password:
+        <input type="text" class="text" id="password">
+      </p>
+      <p>Max number of players:
+        <input type="number" class="number" id="max-players">
+      </p>
+    </section>
+    <section class="rounds">
+      <h3>Rounds</h3>
+      <p>Round duration: 
+        <input type="number" class="number" id="round-duration">
+      </p>
+    </section>
+    <button id="create-button">Create Room</button>
+  </main>
+  <script src="../scripts/create-room.js"></script>
 </body>
 </html>
