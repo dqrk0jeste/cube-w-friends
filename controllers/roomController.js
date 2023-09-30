@@ -29,7 +29,7 @@ const joinRoomWRoomCode = (req, res) => {
   const foundRoom = Room.findRoom(roomCode);
   
   if(!foundRoom) {
-    res.status(404);
+    res.sendStatus(404);
     return;
   }
   if(foundRoom.players.includes(user)) {

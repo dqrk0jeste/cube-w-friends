@@ -36,7 +36,7 @@ body {
 .timer {
   display: inline-block;
   color: white;
-  font-size: 7rem;
+  font-size: 8rem;
   text-shadow: 0px 0px 10px white;
   transition: font-size 0.3s;
 }
@@ -175,6 +175,10 @@ body {
 
 .modal-body {
   padding: 10px;
+}
+
+.open {
+  display: flex;
 }
 
 @media screen and (height < 650px) {

@@ -26,7 +26,7 @@
     <div class="average ao25">ao25: 12.00</div>
     <div class="average ao50">ao50: 12.00</div>
     <div class="average ao100">ao100: 12.00</div>
-    <button class="my-times-button">
+    <button class="my-times-button" id="my-times-button">
       <i class='bx bxs-bar-chart-alt-2'></i>
     </button>
     
@@ -37,16 +37,16 @@
       <div class="player">darko: 12.00</div>
       <div class="player">darko: 12.00</div>
       <div class="player">darko: 12.00</div>
-      <div class="player all-users">All users</div>
-      <div class="player all-times">All times</div>
+      <div class="player all-users" id="users-tab">All users</div>
+      <div class="player all-times" id="times-tab">All times</div>
     </div>
   </section>
-  <div class="modal-container">
+  <div class="modal-container" id="times-modal">
     <div class="modal">
       <div class="modal-header">
-        <h3>All times: </h3>
+        <h3>Round times: </h3>
         <div class="button-container">
-          <button><i class='bx bx-x'></i></button>
+          <button id="close-times-modal-button"><i class='bx bx-x'></i></button>
         </div>
       </div>
       <div class="modal-body">
@@ -72,12 +72,12 @@
       </div>
     </div>
   </div>
-  <div class="modal-container admin"> 
+  <div class="modal-container admin" id="users-modal"> 
     <div class="modal">
       <div class="modal-header">
-        <h3>All users: </h3>
+        <h3>Everyone in this room: </h3>
         <div class="button-container">
-          <button><i class='bx bx-x'></i></button>
+          <button id="close-users-modal-button"><i class='bx bx-x'></i></button>
         </div>
       </div>
       <div class="modal-body">
@@ -105,5 +105,27 @@
       </div>
     </div>
   </div>
+  <div class="modal-container my-times" id="my-times-modal"> 
+    <div class="modal">
+      <div class="modal-header">
+        <h3>My times:r </h3>
+        <div class="button-container">
+          <button id="close-my-times-modal-button"><i class='bx bx-x'></i></button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>12.00</p>
+        <p>12.00</p>
+        <p>12.00</p>
+        <p>12.00</p>
+        <p>12.00</p>
+        <p>12.00</p>
+        <p>12.00</p>
+        <p>12.00</p>
+       
+      </div>
+    </div>
+  </div>
+  <script src="../scripts/room.js"></script>
 </body>
 </html>

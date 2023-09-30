@@ -9,13 +9,14 @@
 }
 
 html {
-  height: 100%;
+  min-height: 100vh;
 }
 
 body {
-  min-height: 100%;
+  min-height: 100vh;
   padding: 70px 20px;
   background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
+  background-attachment: fixed;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
