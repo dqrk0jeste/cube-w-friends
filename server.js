@@ -31,10 +31,9 @@ app.use('/register(.html)?', require('./routes/register'));
 app.use('/start', verifyJWT, require('./routes/start'));
 app.use('/logout', require('./routes/logout'));
 
-app.get('/current-user', verifyJWT, (req, res, next) => {
-    res.json({ user: req.user });
-    return;
-});
+app.use('/current-user', verifyJWT, require('./routes/userInfo'));
+
+app.use('/room-info/', verifyJWT, require('./routes/roomInfo'));
 
 app.use('/join-room', verifyJWT, require('./routes/joinRoom'));
 app.use('/create-room', verifyJWT, require('./routes/createRoom'));

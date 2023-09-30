@@ -1,3 +1,9 @@
+const loadRoomData = async () => {
+  const res = await fetch(`/room-info/${roomCode}`)
+  const data = await res.json();
+  return data;
+}
+
 document.getElementById('users-tab')
   .addEventListener('click', (e) => {
     document.getElementById('users-modal').classList.toggle('open');
@@ -29,3 +35,8 @@ document.getElementById('close-my-times-modal-button')
   .addEventListener('click', (e) => {
     document.getElementById('my-times-modal').classList.toggle('open');
   });
+
+const roomCode = (Number)(location.pathname.substring(11));
+
+const data = loadRoomData();
+

@@ -15,7 +15,6 @@ const createRoom = (req, res) => {
     rules: rules,
     admin: user,
   });
-  console.log(room);
   res.status(203).json(room);
 };
 
@@ -40,6 +39,17 @@ const joinRoomWRoomCode = (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'room.html'));
 };
 
+const getRoomInfo = (req, res) => {
+  const room = Room.findRoom((Number)(req.params.roomCode));
+  if(room) {
+    res.json(room);
+    return;
+  }
+  res.sendStatus(404);
+  return;
+};
+
+module.exports = getRoomInfo;
 
 // const joinRoom = (req, res) => {
 //   const user = req.body.user;
@@ -62,4 +72,4 @@ const joinRoomWRoomCode = (req, res) => {
 //   res.status(201).json(foundRoom);
 // };
 
-module.exports = { createRoom, joinRoomWRoomCode };
+module.exports = { createRoom, joinRoomWRoomCode, getRoomInfo};

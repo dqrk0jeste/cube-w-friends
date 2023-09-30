@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'register.html'));
   return;
 });
+
 router.post('/', handleRegistation);
 
 module.exports = router;
