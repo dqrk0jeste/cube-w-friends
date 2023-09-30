@@ -1,3 +1,5 @@
+const path = require('path');
+
 const Room = require('../Database Entries/Room');
 
 const createRoom = (req, res) => {
@@ -13,28 +15,8 @@ const createRoom = (req, res) => {
     rules: rules,
     admin: user,
   });
-  res.status(201).json(room);
-};
-
-const joinRoom = (req, res) => {
-  const user = req.body.user;
-  const roomCode = req.body.roomCode;
-  if(!user) {
-    res.sendStatus(401);
-    return;
-  }
-  const foundRoom = Room.findRoom(roomCode);
-  
-  if(!foundRoom) {
-    res.sendStatus(404);
-    return;
-  }
-  if(foundRoom.players.includes(user)) {
-    res.sendStatus(403);
-    return;
-  }
-  foundRoom.players.push(user);
-  res.status(201).json(foundRoom);
+  console.log(room);
+  res.status(203).json(room);
 };
 
 const joinRoomWRoomCode = (req, res) => {
@@ -45,7 +27,6 @@ const joinRoomWRoomCode = (req, res) => {
     return;
   }
   const foundRoom = Room.findRoom(roomCode);
-  console.log(foundRoom);
   
   if(!foundRoom) {
     res.status(404);
@@ -56,7 +37,29 @@ const joinRoomWRoomCode = (req, res) => {
     return;
   }
   foundRoom.players.push(user);
-  res.status(201).json(foundRoom);
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'room.html'));
 };
 
-module.exports = { createRoom, joinRoom, joinRoomWRoomCode };
+
+// const joinRoom = (req, res) => {
+//   const user = req.body.user;
+//   const roomCode = req.body.roomCode;
+//   if(!user) {
+//     res.sendStatus(401);
+//     return;
+//   }
+//   const foundRoom = Room.findRoom(roomCode);
+  
+//   if(!foundRoom) {
+//     res.sendStatus(404);
+//     return;
+//   }
+//   if(foundRoom.players.includes(user)) {
+//     res.sendStatus(403);
+//     return;
+//   }
+//   foundRoom.players.push(user);
+//   res.status(201).json(foundRoom);
+// };
+
+module.exports = { createRoom, joinRoomWRoomCode };

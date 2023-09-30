@@ -7,9 +7,12 @@
   font-family: 'Poppins', Arial;
 }
 
+html {
+  height: 100%;
+}
+
 body {
-  width: 100vw;
-  height: 100vh;
+  min-height: 100%;
   padding: 0 20px;
   background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
   overflow: hidden;

@@ -1,19 +1,21 @@
 document.getElementById('create-button')
   .addEventListener('click', e => {
     const rules = {
-      password: document.getElementById('password').value,
       maxPlayers: document.getElementById('max-players').value,
       roundDuration: document.getElementById('round-duration').value
     };
-    const roomName = document.getElementById('room-name');
+    const roomName = document.getElementById('room-name').value;
     fetch('', {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         roomName: roomName,
         rules: rules
-      }
-    }).then(response => response.json())
+      })
+    }).then((res) => res.json())
       .then((data) => {
-      location.assign(`../join-room/${data.roomCode}`);
-    });
-  });
+        location.assign(`../join-room/${data.roomCode}`);
+      })
+});

@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,400;1,600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 0;
+  font-family: 'Poppins', Arial;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  min-height: 430px;
+  height: 100%;
+}
+
+.scramble {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 10px;
+  border: 0 solid black;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+.timer {
+  display: inline-block;
+  color: white;
+  font-size: 7rem;
+  text-shadow: 0px 0px 10px white;
+  transition: font-size 0.3s;
+}
+
+.timer-and-times .times {
+  display: none;
+}
+
+.averages {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-times-button {
+  font-size: 20px;
+  margin-top: 10px;
+  padding: 5px 15px;
+  border: 0 solid black;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  align-self: center;
+}
+
+.my-times-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.average,
+.timer-and-times .time {
+  font-size: 20px;
+  color: white;
+  text-shadow: 0px 0px 10px #f0f0f0;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.finishers-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.finishers {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 400px;
+}
+
+.player {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 15px 0;
+  border: 0 solid black;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+}
+
+.player:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.all-times,.all-users {
+  cursor: pointer;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  width: calc(100% - 50px);
+  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+}
+
+.modal-body {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgb(193, 193, 193);
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-wrap: nowrap;
+  padding: 10px;
+  border-bottom: 1px solid black;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+}
+
+.modal-header button {
+  display: flex;
+  align-items: center;
+  font-size: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.modal p {
+  padding: 3px 0;
+}
+
+.modal-body {
+  padding: 10px;
+}
+
+@media screen and (height < 650px) {
+  .ao25, .ao50, .ao100 {
+    display: none;
+  }
+}
+
+@media screen and (width > 800px) {
+  body {
+    height: 100%;
+    justify-content: start;
+    gap: 15%;
+  }
+
+  .scramble {
+    font-size: 30px;
+  }
+
+  .timer-and-times .times {
+    display: block;
+  }
+
+  .timer {
+    font-size: 9rem;
+  }
+
+  .my-times-button {
+    display: none;
+  }
+
+  .finishers-container {
+    position: fixed;
+    top: 100px;
+    left: 10px;
+    width: 180px;
+  }
+
+  .finishers {
+    display: block;
+  }
+
+  .player {
+    margin-bottom: 10px;
+  }
+
+  main {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+  }
+
+  .timer-and-times .time {
+    font-size: 30px;
+    opacity: 0.6;
+  }
+
+  .averages {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+  }
+
+  .modal {
+    width: 500px;
+    min-width: 0;
+  }
+}
