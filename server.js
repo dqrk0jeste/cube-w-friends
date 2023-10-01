@@ -9,16 +9,14 @@ const cookieParser = require('cookie-parser');
 const connectDB = require('./config/connectDatabase');
 const User = require('./Database Entries/User');
 const { verifyJWT } = require('./middleware/verifyJWT');
+const Room = require('./Database Entries/Room');
+const { generateScramble } = require('./util')
 
 const PORT = process.env.PORT || 3500;
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
-io.on('connection', (socket) => {
-    console.log('sockets work');
-});
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -40,6 +38,40 @@ app.use('/create-room', verifyJWT, require('./routes/createRoom'));
 
 app.all('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', 'views', 'error404.html'));
+});
+
+io.on('connection', (socket) => {
+    socket.on('user-join', (obj) => {
+        const { roomCode, user } = obj;
+        socket.join(`room-${roomCode}`);
+        console.log(`${user} joined room-${roomCode}`);
+        const room = Room.findRoom(roomCode);
+        room.players.push({ user: user, id: socket.id });
+        io.to(`room-${roomCode}`).emit('new-join', { user: user });
+        if(room.players.length === 1) {
+            setInterval(() => {
+                const scramble = generateScramble();
+                io.to(`room-${roomCode}`).emit('new-scramble', scramble);
+            }, (Number)(room.rules.roundDuration) * 1000);
+        }
+    });
+    socket.on('time-submission', (obj) => {
+        const { time, user, roomCode} = obj;
+        io.to(`room-${roomCode}`).emit('new-time-submitted', {
+            time: time,
+            user: user
+        });
+    });
+    socket.on('disconnect', async () => {
+        const id = socket.id;
+        Room.rooms.forEach(room => {
+            room.players = room.players.filter(player => player.id !== id);
+            if(room.players.length === 0) {
+                Room.rooms = Room.rooms.filter(room => room.length > 0);
+            }
+        });
+        io.emit('update-users');
+    });
 });
 
 mongoose.connection.once('open', () => {

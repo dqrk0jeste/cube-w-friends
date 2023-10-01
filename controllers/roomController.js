@@ -31,11 +31,10 @@ const joinRoomWRoomCode = (req, res) => {
     res.sendStatus(404);
     return;
   }
-  if(foundRoom.players.includes(user)) {
-    res.sendStatus(403);
-    return;
-  }
-  foundRoom.players.push(user);
+  // if(foundRoom.players.includes(user)) {
+  //   res.sendStatus(403);
+  //   return;
+  // }
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'room.html'));
 };
 

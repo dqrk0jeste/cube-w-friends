@@ -210,6 +210,10 @@ body {
     display: none;
   }
 
+  #my-times-button-in-times {
+    display: block;
+  }
+
   .finishers-container {
     position: fixed;
     top: 100px;
@@ -241,6 +245,10 @@ body {
     position: fixed;
     bottom: 30px;
     right: 30px;
+  }
+
+  .average {
+    text-align: left;
   }
 
   .modal {
