@@ -43,9 +43,13 @@ app.all('*', (req, res) => {
 io.on('connection', (socket) => {
     socket.on('user-join', (obj) => {
         const { roomCode, user } = obj;
+        const room = Room.findRoom(roomCode);
+        if(!room) {
+            socket.emit('error');
+            return;
+        }
         socket.join(`room-${roomCode}`);
         console.log(`${user} joined room-${roomCode}`);
-        const room = Room.findRoom(roomCode);
         room.players.push({ user: user, id: socket.id });
         io.to(`room-${roomCode}`).emit('new-join', { user: user });
         if(room.players.length === 1) {
@@ -67,7 +71,11 @@ io.on('connection', (socket) => {
         Room.rooms.forEach(room => {
             room.players = room.players.filter(player => player.id !== id);
             if(room.players.length === 0) {
-                Room.rooms = Room.rooms.filter(room => room.length > 0);
+                setTimeout(() => {
+                    if(room.players.length === 0) {
+                        Room.rooms = Room.rooms.filter(room => room.length > 0);
+                    }
+                }, 5000);
             }
         });
         io.emit('update-users');

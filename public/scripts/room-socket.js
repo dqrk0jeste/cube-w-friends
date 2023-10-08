@@ -21,7 +21,10 @@ const socketHandler = async () => {
   });
   socket.on('new-scramble', scramble => {
     console.log(scramble);
-  })
+  });
+  socket.on('error', () => {
+    location.replace('/error404');
+  });
 };
 
 socketHandler();

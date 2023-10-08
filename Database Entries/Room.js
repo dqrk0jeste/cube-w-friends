@@ -25,6 +25,9 @@ class Room {
 }
 
 const codeAvailable = (code) => {
+  if(code < 100000) {
+    return false;
+  }
   for(let i = 0; i < Room.rooms.length; i++) {
     if(Room.rooms[i].roomCode === code) {
       return false;
