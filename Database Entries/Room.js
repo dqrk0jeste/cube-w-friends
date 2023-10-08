@@ -3,6 +3,7 @@ const { random } = require("../util");
 class Room {
   static rooms = [];
   players = [];
+  lastRoundResults = [];
   constructor(obj) {
     this.roomName = obj.roomName;
     this.rules = obj.rules;

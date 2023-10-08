@@ -41,7 +41,13 @@ const joinRoomWRoomCode = (req, res) => {
 const getRoomInfo = (req, res) => {
   const room = Room.findRoom((Number)(req.params.roomCode));
   if(room) {
-    res.json(room);
+    res.json({
+      players: room.players,
+      roomName: room.roomName,
+      rules: room.rules,
+      admin: room.admin,
+      roomCode: room.roomCode
+    });
     return;
   }
   res.sendStatus(404);

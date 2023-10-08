@@ -2,7 +2,8 @@ document.getElementById('create-button')
   .addEventListener('click', e => {
     const rules = {
       maxPlayers: document.getElementById('max-players').value,
-      roundDuration: document.getElementById('round-duration').value
+      roundDuration: document.getElementById('round-duration').value,
+      betweenDuration: document.getElementById('between-duration').value
     };
     const roomName = document.getElementById('room-name').value;
     fetch('', {

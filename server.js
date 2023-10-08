@@ -10,13 +10,17 @@ const connectDB = require('./config/connectDatabase');
 const User = require('./Database Entries/User');
 const { verifyJWT } = require('./middleware/verifyJWT');
 const Room = require('./Database Entries/Room');
-const { generateScramble } = require('./util')
+const { generateScramble } = require('./util');
+const errorHandler = require('./middleware/errorHandler');
+const { userJoined, timeSubmit, handleDisconnect} = require('./controllers/socketController');
 
 const PORT = process.env.PORT || 3500;
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+
+app.use(errorHandler);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -41,44 +45,14 @@ app.all('*', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.on('user-join', (obj) => {
-        const { roomCode, user } = obj;
-        const room = Room.findRoom(roomCode);
-        if(!room) {
-            socket.emit('error');
-            return;
-        }
-        socket.join(`room-${roomCode}`);
-        console.log(`${user} joined room-${roomCode}`);
-        room.players.push({ user: user, id: socket.id });
-        io.to(`room-${roomCode}`).emit('new-join', { user: user });
-        if(room.players.length === 1) {
-            setInterval(() => {
-                const scramble = generateScramble();
-                io.to(`room-${roomCode}`).emit('new-scramble', scramble);
-            }, (Number)(room.rules.roundDuration) * 1000);
-        }
+    socket.on('user-join', socket => {
+        userJoined(socket);
     });
-    socket.on('time-submission', (obj) => {
-        const { time, user, roomCode} = obj;
-        io.to(`room-${roomCode}`).emit('new-time-submitted', {
-            time: time,
-            user: user
-        });
+    socket.on('time-submission', socket => {
+        timeSubmit(socket)
     });
-    socket.on('disconnect', async () => {
-        const id = socket.id;
-        Room.rooms.forEach(room => {
-            room.players = room.players.filter(player => player.id !== id);
-            if(room.players.length === 0) {
-                setTimeout(() => {
-                    if(room.players.length === 0) {
-                        Room.rooms = Room.rooms.filter(room => room.length > 0);
-                    }
-                }, 5000);
-            }
-        });
-        io.emit('update-users');
+    socket.on('disconnect', socket => {
+        handleDisconnect(socket);
     });
 });
 

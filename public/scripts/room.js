@@ -13,7 +13,6 @@ document.getElementById('times-tab')
     document.getElementById('times-modal').classList.toggle('open');
   });
 
-
 document.getElementById('close-times-modal-button')
   .addEventListener('click', (e) => {
     document.getElementById('times-modal').classList.toggle('open');
@@ -61,17 +60,11 @@ const loadUsersModal = (players) => {
 
 const loadStartPage = async () => {
   const roomCode = (Number)(location.pathname.substring(11));
-  const currentUser = await getCurrentUser();
   const roomInfo = await loadRoomData(roomCode);
-  const isAdmin = (currentUser === roomInfo.admin);
 
-  const { players, admin, rules } = roomInfo;
-
+  const { players } = roomInfo;
   loadUsersModal(players);
-
-  
-  const timesModal = document.getElementById('times-modal-body');
-
+  socketHandler(roomInfo);
 };
 
 loadStartPage();
