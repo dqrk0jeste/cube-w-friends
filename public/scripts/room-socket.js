@@ -1,5 +1,7 @@
-export const socket = io();
-export const socketHandler = async (roomInfo) => {
+let roundFinished = false;
+const roomCode = (Number)(location.pathname.substring(11));
+const socket = io();
+const socketHandler = async (roomInfo) => {
   const roomCode = (Number)(location.pathname.substring(11));
   const { players, rules, admin } = roomInfo;
   const currentUser = await getCurrentUser();
@@ -30,7 +32,7 @@ export const socketHandler = async (roomInfo) => {
     document.getElementById('times-modal').classList.remove('open');
     document.getElementById('users-modal').classList.remove('open');
     document.getElementById('my-times-modal').classList.remove('open');
-    document.getElementById('sumbit-modal').classList.remove('open');
+    document.getElementById('submit-modal').classList.remove('open');
     winnersModal.style.display = 'flex';
     if(results.length === 0) {
       //bravo
@@ -67,6 +69,7 @@ export const socketHandler = async (roomInfo) => {
   }); 
   socket.on('new-scramble', scramble => {
     clearInterval(nextRoundInterval);
+    roundFinished = false;
     winnersModal.style.display = 'none';
     scrambleElement.innerHTML = scramble;
     timesModal.innerHTML = '';
@@ -75,7 +78,7 @@ export const socketHandler = async (roomInfo) => {
         el.remove();
       });
   });
-  socket.on('time-submitted', results => {
+  socket.on('new-time-submitted', results => {
     timesModal.innerHTML = '';
     results.forEach((result, index) => {
       const newLine = document.createElement('p');
@@ -86,7 +89,7 @@ export const socketHandler = async (roomInfo) => {
       const newEl = document.createElement('div');
       newEl.classList.add('player');
       newEl.innerHTML = `${results[i].user} - ${results[i].time}`;
-      document.insertBefore(newEl, usersTabElement);
+      finishers.insertBefore(newEl, usersTabElement);
     }
   });
   socket.on('error', () => {

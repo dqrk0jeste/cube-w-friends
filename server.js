@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
             }, (Number)(room.rules.roundDuration) * 1000 + (Number)(room.rules.betweenDuration) * 1000);
         }
     });
-    socket.on('time-submission', obj => {
+    socket.on('time-submit', obj => {
         const { time, user, roomCode} = obj;
         const room = Room.findRoom(roomCode);
         room.lastRoundResults.push({

@@ -1,12 +1,10 @@
-import { timesList } from './data';
-import { time, timerId, setupTimer } from './room-timer.js';
-import { socket, socketHandler } from './room-socket.js';
-
 document.getElementById('submit-button')
   .addEventListener('click', async (e) => {
+    user = await getCurrentUser();
     socket.emit('time-submit', {
       time: time,
-      user: await getCurrentUser()
+      user: user,
+      roomCode: roomCode
     });
   });
 
@@ -86,8 +84,7 @@ const loadUsersModal = (players) => {
   });
 };
 
-const loadStartPage = async () => {
-  const roomCode = (Number)(location.pathname.substring(11));
+const loadRoomAndConfigureSockets = async () => {
   const roomInfo = await loadRoomData(roomCode);
 
   const { players } = roomInfo;
@@ -95,9 +92,7 @@ const loadStartPage = async () => {
   socketHandler(roomInfo);
 };
 
-setupTimer();
-loadStartPage();
-socketHandler();
+loadRoomAndConfigureSockets();
 
 
 
