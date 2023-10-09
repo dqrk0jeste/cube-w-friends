@@ -1,4 +1,12 @@
-import { ao5, ao12, ao50, ao100, formatTime } from './calculateAverges';
+import { ao5, ao12, ao50, ao100, formatTime } from './calculateAverages.js';
+
+export let time;
+export let timerId;
+
+export function setupTimer() {
+  document.addEventListener('keydown', checkAndReady);
+  document.addEventListener('keyup', checkAndStart);
+}
 
 function displayLocalInfo() {
   const timesListElement = document.querySelector('.times');
@@ -7,7 +15,7 @@ function displayLocalInfo() {
       const currentTime = timesList[timesList.length - i];
       const newTime = document.createElement('div');
       newTime.classList.add('time');
-      newTime.innerHTML = timesList[timesList.length - i];
+      newTime.innerHTML = currentTime;
       timesListElement.append(newTime);
     }
   }
@@ -32,13 +40,12 @@ function checkAndStart(e) {
 function checkAndStop(e) {
   if(e.key === ' ') {
     clearInterval(timerId);
-    timesList.push(time);
 
-    displayTimes();
+    displayLocalInfo();
 
     const submitModal = document.getElementById('submit-modal');
     submitModal.classList.add('open');
-    submitModal.firstChild.firstChild.innerHTML = formatTime(time);
+    document.getElementById('submit-time').innerHTML = formatTime(time);
 
     document.removeEventListener('keypress', checkAndStop); 
     document.addEventListener('keydown', checkAndReady); 
@@ -47,13 +54,14 @@ function checkAndStop(e) {
 }
 
 function readyTimer() {
-  document.getElementById('timer').style.color = '#add8e6';
+  document.getElementById('timer').classList.add('ready-timer');
   time = 0;
 }
 
 function startTimer() {
 
   const timer = document.getElementById('timer');
+  timer.classList.remove('ready-timer');
 
   document.removeEventListener('keydown', checkAndReady);
   document.removeEventListener('keyup', checkAndStart);
@@ -66,9 +74,3 @@ function startTimer() {
     timer.innerHTML = formatTime(time);
   }, 10);
 }
-
-let time;
-let timerId;
-
-document.addEventListener('keydown', checkAndReady);
-document.addEventListener('keyup', checkAndStart);

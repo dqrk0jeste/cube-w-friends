@@ -105,9 +105,9 @@ export function ao100() {
 }
 
 export const formatTime = (time)=> {
-  if(time >= 6000) {
-    return `${Math.floor(time / 6000)}:${((time % 6000) / 100).toFixed(2)}`;
+  if(time >= 60000) {
+    return `${Math.floor(time / 60000)}:${((time % 60000) / 1000).toFixed(2)}`;
   } else {
-    return `${(time / 100).toFixed(2)}`;
+    return `${(time / 1000).toFixed(2)}`;
   }
 }

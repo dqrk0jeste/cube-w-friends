@@ -1,4 +1,5 @@
-const socketHandler = async (roomInfo) => {
+export const socket = io();
+export const socketHandler = async (roomInfo) => {
   const roomCode = (Number)(location.pathname.substring(11));
   const { players, rules, admin } = roomInfo;
   const currentUser = await getCurrentUser();
@@ -28,7 +29,8 @@ const socketHandler = async (roomInfo) => {
   socket.on('round-over', results => {
     document.getElementById('times-modal').classList.remove('open');
     document.getElementById('users-modal').classList.remove('open');
-    document.getElementById('my-timesr-modal').classList.remove('open');
+    document.getElementById('my-times-modal').classList.remove('open');
+    document.getElementById('sumbit-modal').classList.remove('open');
     winnersModal.style.display = 'flex';
     if(results.length === 0) {
       //bravo

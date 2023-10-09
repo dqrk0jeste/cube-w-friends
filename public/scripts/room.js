@@ -1,3 +1,15 @@
+import { timesList } from './data';
+import { time, timerId, setupTimer } from './room-timer.js';
+import { socket, socketHandler } from './room-socket.js';
+
+document.getElementById('submit-button')
+  .addEventListener('click', async (e) => {
+    socket.emit('time-submit', {
+      time: time,
+      user: await getCurrentUser()
+    });
+  });
+
 document.getElementById('users-tab')
   .addEventListener('click', (e) => {
     document.getElementById('users-modal').classList.toggle('open');
@@ -83,15 +95,9 @@ const loadStartPage = async () => {
   socketHandler(roomInfo);
 };
 
-const socket = io();
-document.getElementById('submit-button')
-  .addEventListener('click', async (e) => {
-    socket.emit('time-submit', {
-      time: time,
-      user: await getCurrentUser()
-    });
-  });
+setupTimer();
 loadStartPage();
+socketHandler();
 
 
 

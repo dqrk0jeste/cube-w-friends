@@ -11,9 +11,7 @@
 html {
   height: 100%;
 }
-#submit-modal {
-  display: flex;
-}
+
 body {
   background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
   overflow: hidden;
@@ -238,7 +236,11 @@ body {
 .button-clicked {
     background-color: #3a9afb;
     color:white;
-  }
+}
+
+.ready-timer {
+  -webkit-text-stroke: black 2px;
+}
 
 @media screen and (height < 650px) {
   .ao25, .ao50, .ao100 {

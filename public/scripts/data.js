@@ -1,1 +1,1 @@
-const timesList = [];
+export const timesList = [];

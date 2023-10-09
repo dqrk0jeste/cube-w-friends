@@ -11,20 +11,17 @@
 <body>
   <h2 class="scramble" id="scramble">Waiting for the next round...</h2>
   <main class="timer-and-times">
-    <div class="timer">0.00</div>
-    <div class="times">
-      <div class="time">12.00</div>
-    </div>
+    <div class="timer" id="timer">0.00</div>
+    <div class="times"></div>
     <button class="my-times-button" id="my-times-button-in-times">
       <i class='bx bxs-bar-chart-alt-2'></i>
     </button>
   </main>
   <section class="averages">
-    <div class="average ao5">ao5: -</div>
-    <div class="average ao12">ao12: -</div>
-    <div class="average ao25">ao25: -</div>
-    <div class="average ao50">ao50: -</div>
-    <div class="average ao100">ao100: -</div>
+    <div class="average ao5" id="ao5">ao5: -</div>
+    <div class="average ao12" id="ao12">ao12: -</div>
+    <div class="average ao50" id="ao50">ao50: -</div>
+    <div class="average ao100" id="ao100">ao100: -</div>
     <button class="my-times-button" id="my-times-button">
       <i class='bx bxs-bar-chart-alt-2'></i>
     </button>
@@ -84,7 +81,7 @@
   <div class="modal-container" id="submit-modal"> 
     <div class="modal">
       <h1>Your time is: </h1>
-      <strong class="submit-time">12.00</strong>
+      <strong class="submit-time" id="submit-time">12.00</strong>
       <div class="penalty-buttons">
         <button class="plus-two-button" id="plus-two-button">+2</button>
         <button class="dnf-button" id="dnf-button">DNF</button>
@@ -92,8 +89,10 @@
       <button class="submit-button" id="submit-button"><h3>Submit Time</h3></button>
     </div>
   </div>
-  <script src="../scripts/room.js"></script>
+  <script defer src="../scripts/data.js"></script>
+  <script defer type="module" src="../scripts/room-timer.js"></script>
   <script defer src="/socket.io/socket.io.js"></script>
+  <script defer src="../scripts/room.js"></script>
   <script defer src="../scripts/room-socket.js"></script>
 </body>
 </html>
