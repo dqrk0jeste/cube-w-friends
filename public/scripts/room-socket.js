@@ -2,7 +2,6 @@ const socketHandler = async (roomInfo) => {
   const roomCode = (Number)(location.pathname.substring(11));
   const { players, rules, admin } = roomInfo;
   const currentUser = await getCurrentUser();
-  const socket = io();
   socket.emit('user-join', {
     user: currentUser,
     roomCode: roomCode
@@ -81,7 +80,7 @@ const socketHandler = async (roomInfo) => {
       newLine.innerHTML = `${index + 1}. ${result.user} - ${result.time}`;
     });
     const usersTabElement = document.getElementById('users-tab');
-    for(let i = 0; i < Math.max(results.length), 5; i++) {
+    for(let i = 0; i < Math.min(results.length, 5); i++) {
       const newEl = document.createElement('div');
       newEl.classList.add('player');
       newEl.innerHTML = `${results[i].user} - ${results[i].time}`;

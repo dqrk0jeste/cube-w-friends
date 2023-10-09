@@ -104,7 +104,7 @@ export function ao100() {
   return '-';
 }
 
-const formatTime = (time)=> {
+export const formatTime = (time)=> {
   if(time >= 6000) {
     return `${Math.floor(time / 6000)}:${((time % 6000) / 100).toFixed(2)}`;
   } else {

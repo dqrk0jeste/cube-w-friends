@@ -12,9 +12,9 @@ function displayLocalInfo() {
     }
   }
   document.getElementById('ao5').innerHTML = `ao5: ${ao5()}`;
-  document.getElementById('ao12').innerHTML = `ao5: ${ao12()}`;
-  document.getElementById('ao50').innerHTML = `ao5: ${ao50()}`;
-  document.getElementById('ao100').innerHTML = `ao5: ${ao100()}`;
+  document.getElementById('ao12').innerHTML = `ao12: ${ao12()}`;
+  document.getElementById('ao50').innerHTML = `ao50: ${ao50()}`;
+  document.getElementById('ao100').innerHTML = `ao100: ${ao100()}`;
 }
 
 function checkAndReady(e) {
@@ -36,23 +36,24 @@ function checkAndStop(e) {
 
     displayTimes();
 
-    document.querySelector('.js-times-list').classList.remove('hidden');
-    document.querySelector('.js-average-container').classList.remove('hidden');
-    document.querySelector('.js-scramble-container').classList.remove('hidden');
-    document.querySelector('.js-timer').classList.remove('bigger-font');
+    const submitModal = document.getElementById('submit-modal');
+    submitModal.classList.add('open');
+    submitModal.firstChild.firstChild.innerHTML = formatTime(time);
 
-    document.body.removeEventListener('keypress', checkAndStop); 
+    document.removeEventListener('keypress', checkAndStop); 
+    document.addEventListener('keydown', checkAndReady); 
+    document.addEventListener('keyup', checkAndStart);
   }
 }
 
 function readyTimer() {
-  document.getElementById('timer').style.color = 'rgba('
+  document.getElementById('timer').style.color = '#add8e6';
   time = 0;
 }
 
 function startTimer() {
 
-  let timer = document.querySelector('.js-timer');
+  const timer = document.getElementById('timer');
 
   document.removeEventListener('keydown', checkAndReady);
   document.removeEventListener('keyup', checkAndStart);
@@ -62,17 +63,12 @@ function startTimer() {
   const startTime = Date.now();
   timerId = setInterval(() => {
     time = Date.now() - startTime;
-    if(time < 6000) {
-      timer.innerHTML = `${(time / 100).toFixed(2)}`;
-    } else {
-      timer.innerHTML = `${Math.floor(time / 6000)}:${((time % 6000) / 100).toFixed(2)}
-      `;
-    }
+    timer.innerHTML = formatTime(time);
   }, 10);
 }
 
 let time;
 let timerId;
 
-document.body.addEventListener('keydown', checkAndReady);
-document.body.addEventListener('keyup', checkAndStart);
+document.addEventListener('keydown', checkAndReady);
+document.addEventListener('keyup', checkAndStart);

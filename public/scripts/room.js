@@ -34,6 +34,22 @@ document.getElementById('close-my-times-modal-button')
     document.getElementById('my-times-modal').classList.toggle('open');
   });
 
+const dnfButton = document.getElementById('dnf-button');
+const plusTwoButton = document.getElementById('plus-two-button');
+
+let dnf = false;
+let plusTwo = false;
+
+dnfButton.addEventListener('click', (e) => {
+    dnfButton.classList.toggle('button-clicked');
+    dnf = !dnf;
+  });
+
+plusTwoButton.addEventListener('click', (e) => {
+  plusTwoButton.classList.toggle('button-clicked');
+  plusTwo = !plusTwo;
+});
+
 const loadRoomData = async (roomCode) => {
   const res = await fetch(`/room-info/${roomCode}`)
   const data = await res.json();
@@ -67,6 +83,14 @@ const loadStartPage = async () => {
   socketHandler(roomInfo);
 };
 
+const socket = io();
+document.getElementById('submit-button')
+  .addEventListener('click', async (e) => {
+    socket.emit('time-submit', {
+      time: time,
+      user: await getCurrentUser()
+    });
+  });
 loadStartPage();
 
 

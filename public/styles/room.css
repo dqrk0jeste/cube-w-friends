@@ -11,7 +11,9 @@
 html {
   height: 100%;
 }
-
+#submit-modal {
+  display: flex;
+}
 body {
   background: linear-gradient(to left top, #007FFF, #89CFF0, #CCCCFF);
   overflow: hidden;
@@ -195,6 +197,48 @@ body {
   font-size: 20px;
   padding: 0 10px 10px 10px;
 }
+
+#submit-modal .modal {
+  padding: 20px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+}
+
+.plus-two-button,
+.dnf-button,
+.submit-button {
+  padding: 5px 20px;
+  border: 0 solid black;
+  background-color:white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#submit-modal .submit-button {
+  background-color: #3a9afb;
+  color:white;
+}
+
+.submit-time {
+  font-size: 40px;
+  line-height: 50px;
+  margin-bottom: 10px;
+}
+
+#submit-modal button:hover {
+  opacity: 0.8;
+}
+
+.button-clicked {
+    background-color: #3a9afb;
+    color:white;
+  }
 
 @media screen and (height < 650px) {
   .ao25, .ao50, .ao100 {
