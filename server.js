@@ -1,4 +1,3 @@
-//require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -61,6 +60,7 @@ io.on('connection', (socket) => {
             room.interval = setInterval(() => {
                 const results = room.lastRoundResults;
                 io.to(`room-${roomCode}`).emit('round-over', results);
+                room.lastRoundResults = [];
                 setTimeout(() => {
                     const scramble = generateScramble();
                     io.to(`room-${roomCode}`).emit('new-scramble', scramble);
@@ -75,7 +75,15 @@ io.on('connection', (socket) => {
             time: time,
             user: user
         });
-        room.lastRoundResults.sort((a, b) => a.time - b.time);
+        room.lastRoundResults.sort((a, b) => {
+            if(a.time === 'DNF') {
+                return 1;
+            } else if(b.time === 'DNF') {
+                return -1;
+            } else {
+                return a.time - b.time;
+            }
+        });
         io.to(`room-${roomCode}`).emit('new-time-submitted', room.lastRoundResults);
     });
     socket.on('disconnect', () => {

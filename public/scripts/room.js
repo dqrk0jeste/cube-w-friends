@@ -4,30 +4,35 @@ submitButton
     if(dnfPenalty) {
       socket.emit('time-submit', {
         user: user,
-        time: 'dnf',
+        time: 'DNF',
         roomCode: roomCode
       });
+      timesList.push('DNF');
     } else {
       socket.emit('time-submit', {
         time: time + plusTwoPenalty,
         user: user,
         roomCode: roomCode
       });
+      timesList.push(time + plusTwoPenalty);
     }
     timeSubmitted = true;
     submitModal.classList.remove('open');
+    displayLocalInfo();
   });
 
 plusTwoButton
   .addEventListener('click', () => {
-    plusTwoPenalty = 2;
+    plusTwoPenalty = 2000;
     plusTwoButton.classList.toggle('button-clicked');
+    submitTime.innerHTML = formatTime(time + 2000);
   });
 
 dnfButton
   .addEventListener('click', () => {
     dnfPenalty = true;
     dnfButton.classList.toggle('button-clicked');
+    submitTime.innerHTML = 'DNF';
   });
 
 document.getElementById('users-tab')

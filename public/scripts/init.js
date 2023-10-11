@@ -15,6 +15,7 @@ const socket = io();
 
 const usersModal = document.getElementById('users-modal-body');
 const timesModal = document.getElementById('times-modal-body');
+const myTimesModal = document.getElementById('my-times-modal-body');
 const finishers = document.getElementById('finishers');
 const scrambleElement = document.getElementById('scramble');
 const winnersModal = document.getElementById('winners-modal');
@@ -29,3 +30,6 @@ const plusTwoButton = document.getElementById('plus-two-button');
 const dnfButton = document.getElementById('dnf-button');
 const submitModal = document.getElementById('submit-modal');
 const submitButton = document.getElementById('submit-button');
+const submitTime = document.getElementById('submit-time');
+const timesListElement = document.querySelector('.times');
+const usersTabElement = document.getElementById('users-tab');

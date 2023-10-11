@@ -19,14 +19,6 @@ const socketHandler = async (roomInfo) => {
   socket.on('round-over', results => {
     roundOn = false;
     clearInterval(timerId);
-    if(!timeSubmitted) {
-      socket.emit('time-submit', {
-        user: user,
-        time: 'dnf',
-        roomCode: roomCode
-      });
-      timer.innerHTML = 'DNF';
-    }
     document.getElementById('times-modal').classList.remove('open');
     document.getElementById('users-modal').classList.remove('open');
     document.getElementById('my-times-modal').classList.remove('open');
@@ -36,24 +28,24 @@ const socketHandler = async (roomInfo) => {
       //bravo
     } else if(results.length === 1) {
       resultsList.innerHTML = `
-        <h1>&#127942; ${results[0].user} - ${results[0].time}</h1>`
+        <h1>&#127942; ${results[0].user} - ${formatTime(results[0].time)}</h1>`
     } else if(results.length === 2) {
       resultsList.innerHTML = `
-        <h1>&#127942; ${results[0].user} - ${results[0].time}</h1>
-        <h2>&#129352; ${results[1].user} - ${results[1].time}</h2>`
+        <h1>&#127942; ${results[0].user} - ${formatTime(results[0].time)}</h1>
+        <h2>&#129352; ${results[1].user} - ${formatTime(results[1].time)}</h2>`
     } else if(results.length === 3) {
       resultsList.innerHTML = `
-        <h1>&#127942; ${results[0].user} - ${results[0].time}</h1>
-        <h2>&#129352; ${results[1].user} - ${results[1].time}</h2>
-        <h2>&#129353; ${results[2].user} - ${results[2].time}</h2>`
+        <h1>&#127942; ${results[0].user} - ${formatTime(results[0].time)}</h1>
+        <h2>&#129352; ${results[1].user} - ${formatTime(results[1].time)}</h2>
+        <h2>&#129353; ${results[2].user} - ${formatTime(results[2].time)}</h2>`
     } else {
       resultsList.innerHTML = `
-        <h1>&#127942; ${results[0].user} - ${results[0].time}</h1>
-        <h2>&#129352; ${results[1].user} - ${results[1].time}</h2>
-        <h2>&#129353; ${results[2].user} - ${results[2].time}</h2>`
+        <h1>&#127942; ${results[0].user} - ${formatTime(results[0].time)}</h1>
+        <h2>&#129352; ${results[1].user} - ${formatTime(results[1].time)}</h2>
+        <h2>&#129353; ${results[2].user} - ${formatTime(results[2].time)}</h2>`
       for(let i = 3; i < results.length; i++) {
         const newLine = document.createElement('p');
-        newLine.innerHTML = `${i + 1}. ${results[i].user} - ${results[i].time}`;
+        newLine.innerHTML = `${i + 1}. ${results[i].user} - ${formatTime(results[i].time)}`;
         resultsList.append(newLine);
       }
     }
@@ -72,8 +64,8 @@ const socketHandler = async (roomInfo) => {
     plusTwoPenalty = 0;
     dnfPenalty = false;
     winnersModal.classList.remove('open');
-    dnfButton.classList.remove('active-button');
-    plusTwoButton.classList.remove('active-button');
+    dnfButton.classList.remove('button-clicked');
+    plusTwoButton.classList.remove('button-clicked');
     scrambleElement.innerHTML = scramble;
     timesModal.innerHTML = '';
     document.querySelectorAll('.player')
@@ -85,13 +77,17 @@ const socketHandler = async (roomInfo) => {
     timesModal.innerHTML = '';
     results.forEach((result, index) => {
       const newLine = document.createElement('p');
-      newLine.innerHTML = `${index + 1}. ${result.user} - ${result.time}`;
+      newLine.innerHTML = `${index + 1}. ${result.user} - ${formatTime(result.time)}`;
+      timesModal.append(newLine);
     });
-    const usersTabElement = document.getElementById('users-tab');
+    document.querySelectorAll('.player')
+      .forEach(el => {
+        el.remove();
+      });
     for(let i = 0; i < Math.min(results.length, 5); i++) {
       const newEl = document.createElement('div');
       newEl.classList.add('player');
-      newEl.innerHTML = `${results[i].user} - ${results[i].time}`;
+      newEl.innerHTML = `${results[i].user} - ${formatTime(results[i].time)}`;
       finishers.insertBefore(newEl, usersTabElement);
     }
   });

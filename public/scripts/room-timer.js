@@ -4,16 +4,23 @@ function setupTimer() {
 }
 
 function displayLocalInfo() {
-  const timesListElement = document.querySelector('.times');
   for(let i = 1; i <= 5; i++) {
     if(timesList.length >= i) {
       const currentTime = timesList[timesList.length - i];
       const newTime = document.createElement('div');
       newTime.classList.add('time');
-      newTime.innerHTML = currentTime;
+      newTime.innerHTML = formatTime(currentTime);
       timesListElement.append(newTime);
     }
   }
+
+  for(let i = timesList.length - 1; i >= 0; i--) {
+    const currentTime = timesList[i];
+    const newTime = document.createElement('p');
+    newTime.innerHTML = formatTime(currentTime);
+    myTimesModal.append(newTime);
+  };
+
   ao5Element.innerHTML = `ao5: ${ao5()}`;
   ao12Element.innerHTML = `ao12: ${ao12()}`;
   ao50Element.innerHTML = `ao50: ${ao50()}`;
@@ -36,10 +43,9 @@ function checkAndStop(e) {
   if(e.key === ' ' && roundOn) {
     clearInterval(timerId);
     roundOn = false;
-    displayLocalInfo();
 
     submitModal.classList.add('open');
-    document.getElementById('submit-time').innerHTML = formatTime(time);
+    submitTime.innerHTML = formatTime(time);
 
     document.removeEventListener('keypress', checkAndStop);
     setTimeout(() => {
@@ -72,73 +78,67 @@ function startTimer() {
 }
 
 function ao5() {
-  let best = timesList[timesList.length - 1]; 
-  let worst = timesList[timesList.length - 1];
-  let bestIndex = 1;
-  let worstIndex = 1;
   let currentTime;
   let sum = 0;
-  if(timesList.length >= 5) {
-    for(let i = 2; i <= 5; i++) {
-      currentTime = timesList[timesList.length - i];
-      if(currentTime < best) {
-        best = currentTime;
-        bestIndex = i;
-      } else if(currentTime > worst) {
-        worst = currentTime;
-        worstIndex = i;
-      }
+  if(timesList.length >= 100) {
+    let copy = [];
+    for(let i = 0; i < 100; i++) {
+      copy[i] = timesList[timesList.length - i - 1];
     }
 
-    for(let i = 1; i <= 5; i++) {
-      currentTime = timesList[timesList.length - i];
-      if(i === bestIndex || i === worstIndex) {
-        continue;
+    copy.sort((a, b) => {
+      if(a.time === 'DNF') {
+          return 1;
+      } else if(b.time === 'DNF') {
+          return -1;
+      } else {
+          return a.time - b.time;
       }
-      sum += currentTime;
+  });
+
+    if(copy[94] === 'DNF') {
+      return 'DNF';
     }
 
-    const average = sum / 3;
+    for(let i = 5; i < 95; i++) {
+      sum += copy[i];
+    }
+    const average = sum / 90;
     return formatTime(average);
   }
-  return '-';
 }
 
 function ao12() {
-  let best = timesList[timesList.length - 1];
-  let worst = timesList[timesList.length - 1];
-  let bestIndex = 1;
-  let worstIndex = 1;
-  let currentTime;
   let sum = 0;
-  if(timesList.length >= 12) {
-    for(let i = 2; i <= 12; i++) {
-      currentTime = timesList[timesList.length - i];
-      if(currentTime < best) {
-        best = currentTime;
-        bestIndex = i;
-      } else if(currentTime > worst) {
-        worst = currentTime;
-        worstIndex = i;
-      }
+  if(timesList.length >= 5) {
+    let copy = [];
+    for(let i = 0; i < 5; i++) {
+      copy[i] = timesList[timesList.length - i - 1];
     }
 
-    for(let i = 1; i <= 12; i++) {
-      currentTime = timesList[timesList.length - i];
-      if(i === bestIndex || i === worstIndex) {
-        continue;
+    copy.sort((a, b) => {
+      if(a.time === 'DNF') {
+          return 1;
+      } else if(b.time === 'DNF') {
+          return -1;
+      } else {
+          return a.time - b.time;
       }
-      sum += currentTime;
+  });
+
+    if(copy[4] === 'DNF') {
+      return 'DNF';
     }
 
-    const average = sum / 10;
+    for(let i = 1; i < 4; i++) {
+      sum += copy[i];
+    }
+    const average = sum / 3;
     return formatTime(average);
   }
-  return '-';
 }
 
 function ao50() {
-  let currentTime;
   let sum = 0;
   if(timesList.length >= 50) {
     let copy = [];
@@ -146,7 +146,19 @@ function ao50() {
       copy[i] = timesList[timesList.length - i - 1];
     }
 
-    copy.sort((a, b) => a - b);
+    copy.sort((a, b) => {
+      if(a === 'DNF') {
+          return 1;
+      } else if(b === 'DNF') {
+          return -1;
+      } else {
+          return a - b;
+      }
+    });
+
+    if(copy[46] === 'DNF') {
+      return 'DNF';
+    }
 
     for(let i = 3; i < 47; i++) {
       sum += copy[i];
@@ -158,7 +170,6 @@ function ao50() {
 }
 
 function ao100() {
-  let currentTime;
   let sum = 0;
   if(timesList.length >= 100) {
     let copy = [];
@@ -166,7 +177,19 @@ function ao100() {
       copy[i] = timesList[timesList.length - i - 1];
     }
 
-    copy.sort((a, b) => a - b);
+    copy.sort((a, b) => {
+      if(a.time === 'DNF') {
+          return 1;
+      } else if(b.time === 'DNF') {
+          return -1;
+      } else {
+          return a.time - b.time;
+      }
+  });
+
+    if(copy[94] === 'DNF') {
+      return 'DNF';
+    }
 
     for(let i = 5; i < 95; i++) {
       sum += copy[i];
@@ -178,7 +201,9 @@ function ao100() {
 }
 
 function formatTime(time) {
-  if(time >= 60000) {
+  if(time === 'dnf') {
+    return 'dnf';
+  } else if(time >= 60000) {
     return `${Math.floor(time / 60000)}:${((time % 60000) / 1000).toFixed(2)}`;
   } else {
     return `${(time / 1000).toFixed(2)}`;
