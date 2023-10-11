@@ -21,19 +21,19 @@ function displayLocalInfo() {
 }
 
 function checkAndReady(e) {
-    if(e.key === ' ' && !roundFinished) {
+    if(e.key === ' ' && roundOn) {
       readyTimer();
     }
 }
 
 function checkAndStart(e) {
-  if(e.key === ' ' && !roundFinished) {
+  if(e.key === ' ' && roundOn) {
     startTimer();
   }
 }
 
 function checkAndStop(e) {
-  if(e.key === ' ' && !roundFinished) {
+  if(e.key === ' ' && roundOn) {
     clearInterval(timerId);
     roundFinished = true;
 
@@ -187,7 +187,4 @@ function formatTime(time) {
   }
 }
 
-let time;
-let timerId;
-const timesList = [];
 setupTimer();

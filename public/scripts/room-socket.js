@@ -1,6 +1,3 @@
-let roundFinished = false;
-const roomCode = (Number)(location.pathname.substring(11));
-const socket = io();
 const socketHandler = async (roomInfo) => {
   const roomCode = (Number)(location.pathname.substring(11));
   const { players, rules, admin } = roomInfo;
@@ -9,14 +6,6 @@ const socketHandler = async (roomInfo) => {
     user: currentUser,
     roomCode: roomCode
   });
-
-  const usersModal = document.getElementById('users-modal-body');
-  const timesModal = document.getElementById('times-modal-body');
-  const finishers = document.getElementById('finishers');
-  const scrambleElement = document.getElementById('scramble');
-  const winnersModal = document.getElementById('winners-modal');
-  const nextRoundTimer = document.getElementById('next-round-timer');
-  const resultsList = document.querySelector('#winners-modal .modal-body');
 
   socket.on('new-join', data => {
     const newLine = document.createElement('p');
@@ -27,13 +16,15 @@ const socketHandler = async (roomInfo) => {
     const roomData = await loadRoomData(roomCode);
     loadUsersModal(roomData.players);
   });
-  let nextRoundInterval;
   socket.on('round-over', results => {
+    roundOn = false;
+    timer.innerHTML = '0.00';
+    clearInterval(timerId);
     document.getElementById('times-modal').classList.remove('open');
     document.getElementById('users-modal').classList.remove('open');
     document.getElementById('my-times-modal').classList.remove('open');
     document.getElementById('submit-modal').classList.remove('open');
-    winnersModal.style.display = 'flex';
+    winnersModal.classList.add('open');
     if(results.length === 0) {
       //bravo
     } else if(results.length === 1) {
@@ -69,8 +60,8 @@ const socketHandler = async (roomInfo) => {
   }); 
   socket.on('new-scramble', scramble => {
     clearInterval(nextRoundInterval);
-    roundFinished = false;
-    winnersModal.style.display = 'none';
+    roundOn = true;
+    winnersModal.classList.remove('open');
     scrambleElement.innerHTML = scramble;
     timesModal.innerHTML = '';
     document.querySelectorAll('.player')
@@ -93,7 +84,7 @@ const socketHandler = async (roomInfo) => {
     }
   });
   socket.on('error', () => {
-    location.replace('/error404');
+    location.replace('/error');
   });
 };
 
