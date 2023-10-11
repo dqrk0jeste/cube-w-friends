@@ -4,6 +4,7 @@ function setupTimer() {
 }
 
 function displayLocalInfo() {
+  timesListElement.innerHTML = '';
   for(let i = 1; i <= 5; i++) {
     if(timesList.length >= i) {
       const currentTime = timesList[timesList.length - i];
@@ -14,12 +15,10 @@ function displayLocalInfo() {
     }
   }
 
-  for(let i = timesList.length - 1; i >= 0; i--) {
-    const currentTime = timesList[i];
+    const currentTime = timesList[timesList.length - 1];
     const newTime = document.createElement('p');
     newTime.innerHTML = formatTime(currentTime);
-    myTimesModal.append(newTime);
-  };
+    myTimesModal.insertBefore(newTime, myTimesModal.firstChild);
 
   ao5Element.innerHTML = `ao5: ${ao5()}`;
   ao12Element.innerHTML = `ao12: ${ao12()}`;
@@ -78,37 +77,6 @@ function startTimer() {
 }
 
 function ao5() {
-  let currentTime;
-  let sum = 0;
-  if(timesList.length >= 100) {
-    let copy = [];
-    for(let i = 0; i < 100; i++) {
-      copy[i] = timesList[timesList.length - i - 1];
-    }
-
-    copy.sort((a, b) => {
-      if(a.time === 'DNF') {
-          return 1;
-      } else if(b.time === 'DNF') {
-          return -1;
-      } else {
-          return a.time - b.time;
-      }
-  });
-
-    if(copy[94] === 'DNF') {
-      return 'DNF';
-    }
-
-    for(let i = 5; i < 95; i++) {
-      sum += copy[i];
-    }
-    const average = sum / 90;
-    return formatTime(average);
-  }
-}
-
-function ao12() {
   let sum = 0;
   if(timesList.length >= 5) {
     let copy = [];
@@ -117,25 +85,57 @@ function ao12() {
     }
 
     copy.sort((a, b) => {
-      if(a.time === 'DNF') {
+      if(a === 'DNF') {
           return 1;
-      } else if(b.time === 'DNF') {
+      } else if(b === 'DNF') {
           return -1;
       } else {
-          return a.time - b.time;
+          return a - b;
       }
-  });
+    });
 
-    if(copy[4] === 'DNF') {
+      if(copy[3] === 'DNF') {
+        return 'DNF';
+      }
+    
+      for(let i = 1; i < 4; i++) {
+        sum += copy[i];
+      }
+      const average = sum / 3;
+      return formatTime(average);
+  }
+  return '-';
+}
+
+function ao12() {
+  let sum = 0;
+  if(timesList.length >= 12) {
+    let copy = [];
+    for(let i = 0; i < 12; i++) {
+      copy[i] = timesList[timesList.length - i - 1];
+    }
+
+    copy.sort((a, b) => {
+      if(a === 'DNF') {
+          return 1;
+      } else if(b === 'DNF') {
+          return -1;
+      } else {
+          return a - b;
+      }
+    });
+
+    if(copy[10] === 'DNF') {
       return 'DNF';
     }
 
-    for(let i = 1; i < 4; i++) {
+    for(let i = 1; i < 11; i++) {
       sum += copy[i];
     }
-    const average = sum / 3;
+    const average = sum / 10;
     return formatTime(average);
   }
+  return '-';
 }
 
 function ao50() {
@@ -201,8 +201,8 @@ function ao100() {
 }
 
 function formatTime(time) {
-  if(time === 'dnf') {
-    return 'dnf';
+  if(time === 'DNF') {
+    return 'DNF';
   } else if(time >= 60000) {
     return `${Math.floor(time / 60000)}:${((time % 60000) / 1000).toFixed(2)}`;
   } else {
