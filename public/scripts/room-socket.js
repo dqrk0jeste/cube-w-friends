@@ -18,8 +18,15 @@ const socketHandler = async (roomInfo) => {
   });
   socket.on('round-over', results => {
     roundOn = false;
-    timer.innerHTML = '0.00';
     clearInterval(timerId);
+    if(!timeSubmitted) {
+      socket.emit('time-submit', {
+        user: user,
+        time: 'dnf',
+        roomCode: roomCode
+      });
+      timer.innerHTML = 'DNF';
+    }
     document.getElementById('times-modal').classList.remove('open');
     document.getElementById('users-modal').classList.remove('open');
     document.getElementById('my-times-modal').classList.remove('open');
@@ -61,7 +68,12 @@ const socketHandler = async (roomInfo) => {
   socket.on('new-scramble', scramble => {
     clearInterval(nextRoundInterval);
     roundOn = true;
+    timeSubmitted = false;
+    plusTwoPenalty = 0;
+    dnfPenalty = false;
     winnersModal.classList.remove('open');
+    dnfButton.classList.remove('active-button');
+    plusTwoButton.classList.remove('active-button');
     scrambleElement.innerHTML = scramble;
     timesModal.innerHTML = '';
     document.querySelectorAll('.player')

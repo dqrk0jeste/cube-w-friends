@@ -1,11 +1,33 @@
-document.getElementById('submit-button')
+submitButton
   .addEventListener('click', async (e) => {
     user = await getCurrentUser();
-    socket.emit('time-submit', {
-      time: time,
-      user: user,
-      roomCode: roomCode
-    });
+    if(dnfPenalty) {
+      socket.emit('time-submit', {
+        user: user,
+        time: 'dnf',
+        roomCode: roomCode
+      });
+    } else {
+      socket.emit('time-submit', {
+        time: time + plusTwoPenalty,
+        user: user,
+        roomCode: roomCode
+      });
+    }
+    timeSubmitted = true;
+    submitModal.classList.remove('open');
+  });
+
+plusTwoButton
+  .addEventListener('click', () => {
+    plusTwoPenalty = 2;
+    plusTwoButton.classList.toggle('button-clicked');
+  });
+
+dnfButton
+  .addEventListener('click', () => {
+    dnfPenalty = true;
+    dnfButton.classList.toggle('button-clicked');
   });
 
 document.getElementById('users-tab')
@@ -43,22 +65,6 @@ document.getElementById('close-my-times-modal-button')
   .addEventListener('click', (e) => {
     document.getElementById('my-times-modal').classList.toggle('open');
   });
-
-const dnfButton = document.getElementById('dnf-button');
-const plusTwoButton = document.getElementById('plus-two-button');
-
-let dnf = false;
-let plusTwo = false;
-
-dnfButton.addEventListener('click', (e) => {
-    dnfButton.classList.toggle('button-clicked');
-    dnf = !dnf;
-  });
-
-plusTwoButton.addEventListener('click', (e) => {
-  plusTwoButton.classList.toggle('button-clicked');
-  plusTwo = !plusTwo;
-});
 
 const loadRoomData = async (roomCode) => {
   const res = await fetch(`/room-info/${roomCode}`)

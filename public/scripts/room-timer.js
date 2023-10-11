@@ -14,10 +14,10 @@ function displayLocalInfo() {
       timesListElement.append(newTime);
     }
   }
-  document.getElementById('ao5').innerHTML = `ao5: ${ao5()}`;
-  document.getElementById('ao12').innerHTML = `ao12: ${ao12()}`;
-  document.getElementById('ao50').innerHTML = `ao50: ${ao50()}`;
-  document.getElementById('ao100').innerHTML = `ao100: ${ao100()}`;
+  ao5Element.innerHTML = `ao5: ${ao5()}`;
+  ao12Element.innerHTML = `ao12: ${ao12()}`;
+  ao50Element.innerHTML = `ao50: ${ao50()}`;
+  ao100Element.innerHTML = `ao100: ${ao100()}`;
 }
 
 function checkAndReady(e) {
@@ -35,11 +35,9 @@ function checkAndStart(e) {
 function checkAndStop(e) {
   if(e.key === ' ' && roundOn) {
     clearInterval(timerId);
-    roundFinished = true;
-
+    roundOn = false;
     displayLocalInfo();
 
-    const submitModal = document.getElementById('submit-modal');
     submitModal.classList.add('open');
     document.getElementById('submit-time').innerHTML = formatTime(time);
 

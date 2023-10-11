@@ -6,6 +6,11 @@ let time;
 let timerId;
 const timesList = [];
 
+let plusTwoPenalty = 0;
+let dnfPenalty = false;
+let timeSubmitted = false;
+let timed = false;
+
 const socket = io();
 
 const usersModal = document.getElementById('users-modal-body');
@@ -16,3 +21,11 @@ const winnersModal = document.getElementById('winners-modal');
 const nextRoundTimer = document.getElementById('next-round-timer');
 const resultsList = document.querySelector('#winners-modal .modal-body');
 const timer = document.getElementById('timer');
+const ao5Element = document.getElementById('ao5');
+const ao12Element = document.getElementById('ao12');
+const ao50Element = document.getElementById('ao50');
+const ao100Element = document.getElementById('ao100');
+const plusTwoButton = document.getElementById('plus-two-button');
+const dnfButton = document.getElementById('dnf-button');
+const submitModal = document.getElementById('submit-modal');
+const submitButton = document.getElementById('submit-button');
