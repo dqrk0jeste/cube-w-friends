@@ -9,7 +9,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
       document.body.classList.add('msg');
       setTimeout(() => {
         document.body.classList.remove('msg');
-        location.replace('..');
+        location.replace('/login');
       }, 1000);
       return;
     } else if(response.status === 409) {
