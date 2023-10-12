@@ -4,8 +4,8 @@ document.querySelector('form').addEventListener('submit', (e) => {
     method: 'POST',
     body: new URLSearchParams(new FormData(e.target)) 
   }).then((response) => {
-    if(response.status === 200) {
-      location.assign('/start');
+    if(response.status === 200) {    
+        location.replace('/start');
     } else if(response.status === 401) {
       document.querySelector('.message h3').innerHTML = 'Wrong username or password'
       document.body.classList.add('msg');

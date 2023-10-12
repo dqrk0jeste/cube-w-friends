@@ -7,29 +7,28 @@
   <link rel="stylesheet" href="../styles/create-room.css">
 </head>
 <body>
-  <main>
+  <form method="post">
     <h1 class="min-rules">Settings</h1>
     <h1>Your room, your rules!</h1>
     <section class="general">
       <h3>General</h3>
-      <p>Room name:
-        <input type="text" class="text" id="room-name">
-      </p>
-      <p>Max number of players:
-        <input type="number" class="number" id="max-players">
-      </p>
+      <label for="room-name">Room name:
+        <input type="text" name="room-name" class="text" id="room-name">
+      </label>
+      <label for="maxPlayers">Player limit (empty for no limit):
+        <input type="number" name="maxPlayers" class="number" id="max-players">
+      </label>
     </section>
     <section class="rounds">
       <h3>Rounds</h3>
-      <p>Round duration (sec): 
-        <input type="number" class="number" id="round-duration">
-      </p>
-      <p>Time between rounds (sec):
-      <input type="number" class="number" id="between-duration">
-      </p>
+      <label for="roundDuration">Round duration (sec): 
+        <input type="number" name="roundDuration" class="number" id="round-duration" required>
+      </label>
+      <label for="betweenDuration">Time between rounds (sec):
+        <input type="number" name="betweenDuration" class="number" id="between-duration" required>
+      </label>
     </section>
-    <button id="create-button">Create Room</button>
-  </main>
-  <script src="../scripts/create-room.js"></script>
+    <button type="submit" id="create-button">Create Room</button>
+  </form>
 </body>
 </html>

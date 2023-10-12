@@ -25,8 +25,9 @@ app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
 app.use(cookieParser());
 
-app.use('/', require('./routes/login'));
-app.use('/index(.html)?', require('./routes/login'));
+app.use('/', require('./routes/index'));
+app.use('/index(.html)?', require('./routes/index'));
+app.use('/login(.html)?', require('./routes/login'));
 app.use('/register(.html)?', require('./routes/register'));
 app.use('/start', verifyJWT, require('./routes/start'));
 app.use('/logout', require('./routes/logout'));

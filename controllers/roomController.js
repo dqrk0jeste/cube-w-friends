@@ -4,7 +4,11 @@ const Room = require('../Database Entries/Room');
 
 const createRoom = (req, res) => {
   const roomName = req.body.roomName;
-  const rules = req.body.rules;
+  const rules = {
+    maxPlayers: (Number)(req.body.maxPlayers),
+    roundDuration: (Number)(req.body.roundDuration),
+    betweenDuration: (Number)(req.body.betweenDuration)
+  }
   const user = req.user;
   if(!user) {
     res.sendStatus(401);
@@ -15,7 +19,7 @@ const createRoom = (req, res) => {
     rules: rules,
     admin: user,
   });
-  res.status(203).json(room);
+  res.redirect(`../join-room/${room.roomCode}`);
 };
 
 const joinRoomWRoomCode = (req, res) => {
@@ -31,10 +35,14 @@ const joinRoomWRoomCode = (req, res) => {
     res.sendStatus(404);
     return;
   }
-  // if(foundRoom.players.includes(user)) {
-  //   res.sendStatus(403);
-  //   return;
-  // }
+
+  if(foundRoom.rules.maxPlayers === foundRoom.players.length) {
+    res.json({
+      msg: 'room is full'
+    });
+    return;
+  }
+
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'room.html'));
 };
 
