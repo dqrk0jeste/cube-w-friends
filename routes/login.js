@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     res.redirect('/start');
     return;
   }
-  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'login.html'));
   return;
 });
 
