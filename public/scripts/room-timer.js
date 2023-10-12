@@ -1,6 +1,8 @@
 function setupTimer() {
   document.addEventListener('keydown', checkAndReady);
   document.addEventListener('keyup', checkAndStart);
+  document.addEventListener('touchstart', readyTimer);
+  document.addEventListener('touchend', startTimer);
 }
 
 function displayLocalInfo() {
@@ -40,38 +42,54 @@ function checkAndStart(e) {
 
 function checkAndStop(e) {
   if(e.key === ' ' && roundOn) {
+    stopTimer();
+  }
+}
+
+function stopTimer() {
+  if(roundOn) {
     clearInterval(timerId);
     roundOn = false;
-
+  
     submitModal.classList.add('open');
     submitTime.innerHTML = formatTime(time);
-
+  
     document.removeEventListener('keypress', checkAndStop);
+    document.removeEventListener('touchstart', stopTimer);
     setTimeout(() => {
       document.addEventListener('keydown', checkAndReady); 
       document.addEventListener('keyup', checkAndStart);
+      document.addEventListener('touchstart', readyTimer);
+      document.addEventListener('touchend', startTimer);
     }, 200);
   }
 }
 
 function readyTimer() {
-  timer.classList.add('ready-timer');
-  time = 0;
+  if(roundOn) {
+    timer.classList.add('ready-timer');
+    time = 0;
+  }
 }
 
 function startTimer() {
-  timer.classList.remove('ready-timer');
-
-  document.removeEventListener('keydown', checkAndReady);
-  document.removeEventListener('keyup', checkAndStart);
-
-  document.addEventListener('keypress', checkAndStop);
-
-  const startTime = Date.now();
-  timerId = setInterval(() => {
-    time = Date.now() - startTime;
-    timer.innerHTML = formatTime(time);
-  }, 10);
+  if(roundOn) {
+    timer.classList.remove('ready-timer');
+  
+    document.removeEventListener('keydown', checkAndReady);
+    document.removeEventListener('keyup', checkAndStart);
+    document.removeEventListener('touchstart', readyTimer);
+    document.removeEventListener('touchend', startTimer);
+  
+    document.addEventListener('keypress', checkAndStop);
+    document.addEventListener('touchstart', stopTimer);
+  
+    const startTime = Date.now();
+    timerId = setInterval(() => {
+      time = Date.now() - startTime;
+      timer.innerHTML = formatTime(time);
+    }, 10);
+  }
 }
 
 function ao5() {
