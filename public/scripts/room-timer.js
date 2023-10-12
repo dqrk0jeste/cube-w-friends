@@ -17,7 +17,7 @@ function displayLocalInfo() {
 
     const currentTime = timesList[timesList.length - 1];
     const newTime = document.createElement('p');
-    newTime.innerHTML = formatTime(currentTime);
+    newTime.innerHTML = formatTime(currentTime) + '   ' + currentScramble;
     myTimesModal.insertBefore(newTime, myTimesModal.firstChild);
 
   ao5Element.innerHTML = `ao5: ${ao5()}`;
@@ -55,13 +55,11 @@ function checkAndStop(e) {
 }
 
 function readyTimer() {
-  document.getElementById('timer').classList.add('ready-timer');
+  timer.classList.add('ready-timer');
   time = 0;
 }
 
 function startTimer() {
-
-  const timer = document.getElementById('timer');
   timer.classList.remove('ready-timer');
 
   document.removeEventListener('keydown', checkAndReady);

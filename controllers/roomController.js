@@ -5,7 +5,7 @@ const Room = require('../Database Entries/Room');
 const createRoom = (req, res) => {
   const roomName = req.body.roomName;
   const rules = {
-    maxPlayers: (Number)(req.body.maxPlayers),
+    maxPlayers: (Number)(req.body.maxPlayers) || 1000,
     roundDuration: (Number)(req.body.roundDuration),
     betweenDuration: (Number)(req.body.betweenDuration)
   }

@@ -1,9 +1,10 @@
 let roundOn = false;
-let nextRoundInterval;
+let nextRoundInterval, roundInterval;
 const roomCode = (Number)(location.pathname.substring(11));
 
 let time;
 let timerId;
+let currentScramble;
 const timesList = [];
 
 let plusTwoPenalty = 0;
@@ -21,7 +22,8 @@ const scrambleElement = document.getElementById('scramble');
 const winnersModal = document.getElementById('winners-modal');
 const nextRoundTimer = document.getElementById('next-round-timer');
 const resultsList = document.querySelector('#winners-modal .modal-body');
-const timer = document.getElementById('timer');
+const timerBody = document.getElementById('timer');
+const timer = document.getElementById('actual-timer');
 const ao5Element = document.getElementById('ao5');
 const ao12Element = document.getElementById('ao12');
 const ao50Element = document.getElementById('ao50');
@@ -33,3 +35,4 @@ const submitButton = document.getElementById('submit-button');
 const submitTime = document.getElementById('submit-time');
 const timesListElement = document.querySelector('.times');
 const usersTabElement = document.getElementById('users-tab');
+const roundTimerElement = document.getElementById('round-timer');

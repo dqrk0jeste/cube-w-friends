@@ -39,6 +39,15 @@ body {
   font-size: 8rem;
   text-shadow: 0px 0px 10px white;
   transition: font-size 0.3s;
+  position: relative;
+}
+
+.timer .round-timer {
+  font-size: 25px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .timer-and-times .times {

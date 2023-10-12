@@ -52,7 +52,6 @@ io.on('connection', (socket) => {
             return;
         }
         socket.join(`room-${roomCode}`);
-        console.log(`${user} joined room-${roomCode}`);
         room.players.push({ user: user, id: socket.id });
         io.to(`room-${roomCode}`).emit('new-join', { user: user });
         if(room.players.length === 1) {

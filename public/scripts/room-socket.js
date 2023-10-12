@@ -1,6 +1,7 @@
 const socketHandler = async (roomInfo) => {
   const roomCode = (Number)(location.pathname.substring(11));
   const { players, rules, admin } = roomInfo;
+  const { roundDuration , betweenDuration } = rules;
   const currentUser = await getCurrentUser();
   socket.emit('user-join', {
     user: currentUser,
@@ -19,13 +20,14 @@ const socketHandler = async (roomInfo) => {
   socket.on('round-over', results => {
     roundOn = false;
     clearInterval(timerId);
+    clearInterval(roundInterval);
     document.getElementById('times-modal').classList.remove('open');
     document.getElementById('users-modal').classList.remove('open');
     document.getElementById('my-times-modal').classList.remove('open');
     document.getElementById('submit-modal').classList.remove('open');
     winnersModal.classList.add('open');
     if(results.length === 0) {
-      //bravo
+      resultsList.innerHTML = '';
     } else if(results.length === 1) {
       resultsList.innerHTML = `
         <h1>&#127942; ${results[0].user} - ${formatTime(results[0].time)}</h1>`
@@ -50,7 +52,6 @@ const socketHandler = async (roomInfo) => {
       }
     }
     const startTime = Date.now();
-    const { betweenDuration } = rules;
     nextRoundTimer.innerHTML = `Next round in ${betweenDuration}s...`;
     nextRoundInterval = setInterval(() => {
       const timeLeft = betweenDuration - Math.floor((Date.now() - startTime)/1000);
@@ -58,7 +59,14 @@ const socketHandler = async (roomInfo) => {
     }, 200);
   }); 
   socket.on('new-scramble', scramble => {
+    currentScramble = scramble;
     clearInterval(nextRoundInterval);
+    const endTime = Date.now() + roundDuration * 1000;
+    roundTimerElement.innerHTML = roundDuration;
+    roundInterval = setInterval(() => {
+      const roundTimeLeft = Math.floor((endTime - Date.now()) / 1000) >= 0 ? Math.floor((endTime - Date.now()) / 1000) : 0;
+      roundTimerElement.innerHTML = roundTimeLeft;
+    }, 100);
     roundOn = true;
     timeSubmitted = false;
     plusTwoPenalty = 0;
