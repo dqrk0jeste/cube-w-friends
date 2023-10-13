@@ -6,11 +6,6 @@
   box-sizing: border-box;
   min-width: 0;
   font-family: 'Poppins', Arial;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
 }
 
 html {
@@ -48,6 +43,11 @@ body {
   text-shadow: 0px 0px 10px white;
   transition: font-size 0.3s;
   position: relative;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .timer .round-timer {

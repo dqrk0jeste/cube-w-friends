@@ -92,12 +92,14 @@ io.on('connection', (socket) => {
         Room.rooms.forEach(room => {
             room.players = room.players.filter(player => player.id !== id);
             if(room.players.length === 0) {
-                setTimeout(() => {
-                    if(room.players.length === 0) {
-                        clearInterval(room.interval);
-                        Room.rooms = Room.rooms.filter(room => room.length > 0);
-                    }
-                }, 5000);
+                // setTimeout(() => {
+                //     if(room.players.length === 0) {
+                //         clearInterval(room.interval);
+                //         Room.rooms = Room.rooms.filter(room => room.length > 0);
+                //     }
+                // }, 5000);
+                clearInterval(room.interval);
+                Room.rooms = Room.rooms.filter(room => room.length > 0);
             }
         });
         io.emit('update-users');

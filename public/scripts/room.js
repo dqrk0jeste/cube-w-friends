@@ -1,7 +1,6 @@
 const addListeners = () => {
   submitButton
   .addEventListener('click', async (e) => {
-    e.stopPropagation();
     user = await getCurrentUser();
     if(dnfPenalty) {
       socket.emit('time-submit', {
@@ -25,27 +24,24 @@ const addListeners = () => {
 
 plusTwoButton
   .addEventListener('click', () => {
-    e.stopPropagation();
     if(plusTwoPenalty) {
-      plusTwoButton = 0;
+      plusTwoPenalty = 0;
     } else {
       plusTwoPenalty = 2000;
     }
     plusTwoButton.classList.toggle('button-clicked');
-    submitTime.innerHTML = formatTime(time + 2000);
+    submitTime.innerHTML = formatTime(time + plusTwoPenalty);
   });
 
 dnfButton
   .addEventListener('click', () => {
-    e.stopPropagation();
     dnfPenalty = !dnfPenalty;
     dnfButton.classList.toggle('button-clicked');
-    submitTime.innerHTML = 'DNF';
+    submitTime.innerHTML = dnfPenalty ? 'DNF' : formatTime(time + plusTwoPenalty);
   });
 
 document.getElementById('users-tab')
   .addEventListener('click', (e) => {
-    e.stopPropagation();
     document.getElementById('users-modal').classList.toggle('open');
   });
 
@@ -61,13 +57,11 @@ document.getElementById('users-tab')
 
 document.getElementById('close-users-modal-button')
   .addEventListener('click', (e) => {
-    e.stopPropagation();
     document.getElementById('users-modal').classList.toggle('open');
   });
 
 document.getElementById('times-tab')
   .addEventListener('click', (e) => {
-    e.stopPropagation();
     document.getElementById('times-modal').classList.toggle('open');
   });
 
@@ -83,13 +77,11 @@ document.getElementById('times-tab')
 
 document.getElementById('close-times-modal-button')
   .addEventListener('click', (e) => {
-    e.stopPropagation();
     document.getElementById('times-modal').classList.toggle('open');
   });
 
 document.getElementById('my-times-button')
   .addEventListener('click', (e) => {
-    e.stopPropagation();
     document.getElementById('my-times-modal').classList.toggle('open');
   });
 
@@ -105,7 +97,6 @@ document.getElementById('my-times-button')
 
 document.getElementById('my-times-button-in-times')
   .addEventListener('click', (e) => {
-    e.stopPropagation();
     document.getElementById('my-times-modal').classList.toggle('open');
   });
 
@@ -121,7 +112,6 @@ document.getElementById('my-times-button-in-times')
 
 document.getElementById('close-my-times-modal-button')
   .addEventListener('click', (e) => {
-    e.stopPropagation();
     document.getElementById('my-times-modal').classList.toggle('open');
   });
 
