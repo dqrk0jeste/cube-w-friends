@@ -78,6 +78,13 @@ input {
   font-size: 30px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
 button {
   padding: 7px 20px;
   border: 0 solid black;
