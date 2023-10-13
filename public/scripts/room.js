@@ -1,5 +1,7 @@
-submitButton
+const addListeners = () => {
+  submitButton
   .addEventListener('click', async (e) => {
+    e.stopPropagation();
     user = await getCurrentUser();
     if(dnfPenalty) {
       socket.emit('time-submit', {
@@ -23,53 +25,136 @@ submitButton
 
 plusTwoButton
   .addEventListener('click', () => {
-    plusTwoPenalty = 2000;
+    e.stopPropagation();
+    if(plusTwoPenalty) {
+      plusTwoButton = 0;
+    } else {
+      plusTwoPenalty = 2000;
+    }
     plusTwoButton.classList.toggle('button-clicked');
     submitTime.innerHTML = formatTime(time + 2000);
   });
 
 dnfButton
   .addEventListener('click', () => {
-    dnfPenalty = true;
+    e.stopPropagation();
+    dnfPenalty = !dnfPenalty;
     dnfButton.classList.toggle('button-clicked');
     submitTime.innerHTML = 'DNF';
   });
 
 document.getElementById('users-tab')
   .addEventListener('click', (e) => {
+    e.stopPropagation();
     document.getElementById('users-modal').classList.toggle('open');
+  });
+
+document.getElementById('users-tab')
+  .addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+  });
+
+document.getElementById('users-tab')
+  .addEventListener('touchend', (e) => {
+    e.stopPropagation();
   });
 
 document.getElementById('close-users-modal-button')
   .addEventListener('click', (e) => {
+    e.stopPropagation();
     document.getElementById('users-modal').classList.toggle('open');
   });
 
 document.getElementById('times-tab')
   .addEventListener('click', (e) => {
+    e.stopPropagation();
     document.getElementById('times-modal').classList.toggle('open');
+  });
+
+document.getElementById('times-tab')
+  .addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+  });
+
+document.getElementById('times-tab')
+  .addEventListener('touchend', (e) => {
+    e.stopPropagation();
   });
 
 document.getElementById('close-times-modal-button')
   .addEventListener('click', (e) => {
+    e.stopPropagation();
     document.getElementById('times-modal').classList.toggle('open');
   });
 
 document.getElementById('my-times-button')
   .addEventListener('click', (e) => {
+    e.stopPropagation();
     document.getElementById('my-times-modal').classList.toggle('open');
+  });
+
+document.getElementById('my-times-button')
+  .addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+  });
+
+document.getElementById('my-times-button')
+  .addEventListener('touchend', (e) => {
+    e.stopPropagation();
   });
 
 document.getElementById('my-times-button-in-times')
   .addEventListener('click', (e) => {
+    e.stopPropagation();
     document.getElementById('my-times-modal').classList.toggle('open');
   });
 
+document.getElementById('my-times-button-in-times')
+  .addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+  });
+
+document.getElementById('my-times-button-in-times')
+  .addEventListener('touchend', (e) => {
+    e.stopPropagation();
+  });
 
 document.getElementById('close-my-times-modal-button')
   .addEventListener('click', (e) => {
+    e.stopPropagation();
     document.getElementById('my-times-modal').classList.toggle('open');
   });
+
+document.getElementById('times-modal')
+  .addEventListener('touchstart', e => {
+    e.stopPropagation();
+  });
+
+document.getElementById('times-modal')
+  .addEventListener('touchend', e => {
+    e.stopPropagation();
+  });
+
+  document.getElementById('users-modal')
+  .addEventListener('touchstart', e => {
+    e.stopPropagation();
+  });
+
+  document.getElementById('users-modal')
+  .addEventListener('touchend', e => {
+    e.stopPropagation();
+  });
+
+  document.getElementById('my-times-modal')
+  .addEventListener('touchstart', e => {
+    e.stopPropagation();
+  });
+
+  document.getElementById('my-times-modal')
+  .addEventListener('touchend', e => {
+    e.stopPropagation();
+  });
+}
 
 const loadRoomData = async (roomCode) => {
   const res = await fetch(`/room-info/${roomCode}`)
@@ -103,6 +188,7 @@ const loadRoomAndConfigureSockets = async () => {
   socketHandler(roomInfo);
 };
 
+addListeners();
 loadRoomAndConfigureSockets();
 
 

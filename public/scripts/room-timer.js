@@ -55,7 +55,7 @@ function stopTimer() {
     submitTime.innerHTML = formatTime(time);
   
     document.removeEventListener('keypress', checkAndStop);
-    document.removeEventListener('touchstart', stopTimer);
+    document.removeEventListener('touchend', stopTimer);
     setTimeout(() => {
       document.addEventListener('keydown', checkAndReady); 
       document.addEventListener('keyup', checkAndStart);
@@ -66,6 +66,7 @@ function stopTimer() {
 }
 
 function readyTimer() {
+  console.log('tuch');
   if(roundOn) {
     timer.classList.add('ready-timer');
     time = 0;
@@ -82,7 +83,7 @@ function startTimer() {
     document.removeEventListener('touchend', startTimer);
   
     document.addEventListener('keypress', checkAndStop);
-    document.addEventListener('touchstart', stopTimer);
+    document.addEventListener('touchend', stopTimer);
   
     const startTime = Date.now();
     timerId = setInterval(() => {
