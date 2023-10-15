@@ -1,3 +1,3 @@
 # cube-w-friends
 
-https://cube-w-friends.onrender.com
+[for the website click here](https://cube-w-friends.onrender.com)
