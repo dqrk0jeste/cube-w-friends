@@ -18,6 +18,16 @@ const socketHandler = async (roomInfo) => {
     loadUsersModal(roomData.players);
   });
   socket.on('round-over', results => {
+    if(!timeSubmitted && time > 0) {
+      document.removeEventListener('keypress', checkAndStop);
+      document.removeEventListener('touchend', stopTimer);
+      setTimeout(() => {
+        document.addEventListener('keydown', checkAndReady); 
+        document.addEventListener('keyup', checkAndStart);
+        document.addEventListener('touchstart', readyTimer);
+        document.addEventListener('touchend', startTimer);
+      }, 200);
+    }
     roundOn = false;
     clearInterval(timerId);
     clearInterval(roundInterval);

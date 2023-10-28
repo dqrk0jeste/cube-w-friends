@@ -66,7 +66,6 @@ function stopTimer() {
 }
 
 function readyTimer() {
-  console.log('tuch');
   if(roundOn) {
     timer.classList.add('ready-timer');
     time = 0;
