@@ -58,14 +58,19 @@ io.on('connection', (socket) => {
         if(room.players.length === 1) {
             const scramble = generateScramble();
             io.to(`room-${roomCode}`).emit('new-scramble', scramble);
-            room.interval = setInterval(() => {
+            setTimeout(() => {
                 const results = room.lastRoundResults;
                 io.to(`room-${roomCode}`).emit('round-over', results);
                 room.lastRoundResults = [];
+            }, (Number)(room.rules.roundDuration) * 1000);
+            room.interval = setInterval(() => {
+                const scramble = generateScramble();
+                io.to(`room-${roomCode}`).emit('new-scramble', scramble);
                 setTimeout(() => {
-                    const scramble = generateScramble();
-                    io.to(`room-${roomCode}`).emit('new-scramble', scramble);
-                }, (Number)(room.rules.betweenDuration) * 1000);
+                    const results = room.lastRoundResults;
+                    io.to(`room-${roomCode}`).emit('round-over', results);
+                    room.lastRoundResults = [];
+                }, (Number)(room.rules.roundDuration) * 1000); 
             }, (Number)(room.rules.roundDuration) * 1000 + (Number)(room.rules.betweenDuration) * 1000);
         }
     });
