@@ -30,7 +30,7 @@ plusTwoButton
       plusTwoPenalty = 2000;
     }
     plusTwoButton.classList.toggle('button-clicked');
-    submitTime.innerHTML = formatTime(time + plusTwoPenalty);
+    submitTime.innerHTML = dnfPenalty ? 'DNF' : formatTime(time + plusTwoPenalty);
   });
 
 dnfButton
